@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { LocalSourceFilters } from './LocalSourceFilters';
 export type QueryRequest = {
     /**
      * List of chat messages
@@ -23,6 +24,10 @@ export type QueryRequest = {
      * Filter local folder results by classification category (e.g., 'Work', 'Personal')
      */
     category?: (string | null);
+    /**
+     * Filters for local/personal sources (messages, contacts, etc.)
+     */
+    local_source_filters?: (LocalSourceFilters | null);
     /**
      * Search mode: 'repositories', 'sources', or 'unified'
      */

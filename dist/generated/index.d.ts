@@ -66,6 +66,7 @@ export type { ImageSignedUrlResponse } from './models/ImageSignedUrlResponse';
 export type { IndexedResource_Output } from './models/IndexedResource_Output';
 export type { LineageInput } from './models/LineageInput';
 export type { LineageMetadata } from './models/LineageMetadata';
+export type { LocalSourceFilters } from './models/LocalSourceFilters';
 export type { MappingItem } from './models/MappingItem';
 export type { NiaReferences_Output } from './models/NiaReferences_Output';
 export type { OracleResearchRequest } from './models/OracleResearchRequest';
