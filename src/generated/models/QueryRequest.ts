@@ -57,6 +57,10 @@ export type QueryRequest = {
      */
     max_tokens?: (number | null);
     /**
+     * Synthesis model override. Allowed: claude-sonnet-4-5, gpt-5.2-2025-12-11, claude-haiku-4-5-20251001
+     */
+    model?: (string | null);
+    /**
      * Minimum similarity for semantic cache hit (non-streaming only)
      */
     semantic_cache_threshold?: number;
