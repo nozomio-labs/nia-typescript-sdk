@@ -17,7 +17,7 @@ export type DocGrepMatchDetail = {
     /**
      * Starting line number of context
      */
-    context_start_line: number;
+    context_start_line?: number;
     /**
      * Line number of the match
      */
