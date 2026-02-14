@@ -11,29 +11,6 @@ export declare class DefaultService {
      */
     static oracleResearchV2OraclePost(requestBody: OracleResearchRequest): CancelablePromise<any>;
     /**
-     * @deprecated
-     * List Oracle History Sessions
-     * List recent Oracle research sessions for the authenticated API key.
-     *
-     * DEPRECATED: Use /v2/oracle/sessions instead. This endpoint will be removed in a future version.
-     * @param limit
-     * @param skip
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static listOracleHistorySessionsV2OracleHistoryGet(limit?: number, skip?: number): CancelablePromise<any>;
-    /**
-     * @deprecated
-     * Get Oracle History Session
-     * Retrieve the full details of a single Oracle research session.
-     *
-     * DEPRECATED: Use /v2/oracle/sessions/{session_id} instead. This endpoint will be removed in a future version.
-     * @param sessionId
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static getOracleHistorySessionV2OracleHistorySessionIdGet(sessionId: string): CancelablePromise<any>;
-    /**
      * Create Oracle Job
      * Create a new Oracle research job.
      *
@@ -153,16 +130,4 @@ export declare class DefaultService {
      * @throws ApiError
      */
     static getOracleSessionMessagesV2OracleSessionsSessionIdMessagesGet(sessionId: string, limit?: number): CancelablePromise<any>;
-    /**
-     * @deprecated
-     * Oracle Research Stream
-     * DEPRECATED: Use /oracle/jobs + /oracle/jobs/{id}/stream instead.
-     *
-     * Stream Oracle research progress in real-time using Server-Sent Events.
-     * This in-process endpoint will be removed in a future release.
-     * @param requestBody
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static oracleResearchStreamV2OracleStreamPost(requestBody: OracleResearchRequest): CancelablePromise<any>;
 }

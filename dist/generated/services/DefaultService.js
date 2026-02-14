@@ -20,52 +20,6 @@ export class DefaultService {
         });
     }
     /**
-     * @deprecated
-     * List Oracle History Sessions
-     * List recent Oracle research sessions for the authenticated API key.
-     *
-     * DEPRECATED: Use /v2/oracle/sessions instead. This endpoint will be removed in a future version.
-     * @param limit
-     * @param skip
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static listOracleHistorySessionsV2OracleHistoryGet(limit = 20, skip) {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/oracle/history',
-            query: {
-                'limit': limit,
-                'skip': skip,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Get Oracle History Session
-     * Retrieve the full details of a single Oracle research session.
-     *
-     * DEPRECATED: Use /v2/oracle/sessions/{session_id} instead. This endpoint will be removed in a future version.
-     * @param sessionId
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static getOracleHistorySessionV2OracleHistorySessionIdGet(sessionId) {
-        return __request(OpenAPI, {
-            method: 'GET',
-            url: '/oracle/history/{session_id}',
-            path: {
-                'session_id': sessionId,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
      * Create Oracle Job
      * Create a new Oracle research job.
      *
@@ -297,28 +251,6 @@ export class DefaultService {
             query: {
                 'limit': limit,
             },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     * @deprecated
-     * Oracle Research Stream
-     * DEPRECATED: Use /oracle/jobs + /oracle/jobs/{id}/stream instead.
-     *
-     * Stream Oracle research progress in real-time using Server-Sent Events.
-     * This in-process endpoint will be removed in a future release.
-     * @param requestBody
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static oracleResearchStreamV2OracleStreamPost(requestBody) {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/oracle/stream',
-            body: requestBody,
-            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

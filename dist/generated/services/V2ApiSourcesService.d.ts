@@ -1,4 +1,6 @@
 import type { ClassifyLocalFolderRequest } from '../models/ClassifyLocalFolderRequest';
+import type { GlobalSourceSubscribeRequest } from '../models/GlobalSourceSubscribeRequest';
+import type { GlobalSourceSubscribeResponse } from '../models/GlobalSourceSubscribeResponse';
 import type { Source } from '../models/Source';
 import type { SourceCreateRequest } from '../models/SourceCreateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
@@ -34,6 +36,14 @@ export declare class V2ApiSourcesService {
      * @throws ApiError
      */
     static resolveSourceV2SourcesResolveGet(identifier: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<SourceResolveResponse>;
+    /**
+     * Subscribe to a global source
+     * Subscribe to an existing globally indexed public source. Creates a local reference for instant access without re-indexing.
+     * @param requestBody
+     * @returns GlobalSourceSubscribeResponse Successful Response
+     * @throws ApiError
+     */
+    static subscribeSourceV2SourcesSubscribePost(requestBody: GlobalSourceSubscribeRequest): CancelablePromise<GlobalSourceSubscribeResponse>;
     /**
      * Get Source
      * @param sourceId
@@ -96,6 +106,15 @@ export declare class V2ApiSourcesService {
      * @throws ApiError
      */
     static grepSourceV2SourcesSourceIdGrepPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<any>;
+    /**
+     * Sync Source
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static syncSourceV2SourcesSourceIdSyncPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<any>;
     /**
      * Get Source Tree
      * @param sourceId

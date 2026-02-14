@@ -3,6 +3,8 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { ClassifyLocalFolderRequest } from '../models/ClassifyLocalFolderRequest';
+import type { GlobalSourceSubscribeRequest } from '../models/GlobalSourceSubscribeRequest';
+import type { GlobalSourceSubscribeResponse } from '../models/GlobalSourceSubscribeResponse';
 import type { Source } from '../models/Source';
 import type { SourceCreateRequest } from '../models/SourceCreateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
@@ -85,6 +87,26 @@ export class V2ApiSourcesService {
                 'identifier': identifier,
                 'type': type,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Subscribe to a global source
+     * Subscribe to an existing globally indexed public source. Creates a local reference for instant access without re-indexing.
+     * @param requestBody
+     * @returns GlobalSourceSubscribeResponse Successful Response
+     * @throws ApiError
+     */
+    public static subscribeSourceV2SourcesSubscribePost(
+        requestBody: GlobalSourceSubscribeRequest,
+    ): CancelablePromise<GlobalSourceSubscribeResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/subscribe',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },
@@ -273,6 +295,35 @@ export class V2ApiSourcesService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/sources/{source_id}/grep',
+            path: {
+                'source_id': sourceId,
+            },
+            query: {
+                'type': type,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Sync Source
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static syncSourceV2SourcesSourceIdSyncPost(
+        sourceId: string,
+        requestBody: Record<string, any>,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/{source_id}/sync',
             path: {
                 'source_id': sourceId,
             },

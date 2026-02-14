@@ -10,15 +10,7 @@ export declare class V2ApiPackageSearchService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static packageSearchGrepV2V2PackageSearchGrepPost(requestBody: PackageSearchGrepRequest): CancelablePromise<any>;
-    /**
-     * Semantic package search
-     * Hybrid semantic + keyword search over package source. 1-5 natural language queries.
-     * @param requestBody
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    static packageSearchHybridV2V2PackageSearchHybridPost(requestBody: PackageSearchHybridRequest): CancelablePromise<any>;
+    static packageSearchGrepV2V2PackagesGrepPost(requestBody: PackageSearchGrepRequest): CancelablePromise<any>;
     /**
      * Read package file
      * Read specific lines from a package source file. Max 200 lines per request.
@@ -26,5 +18,13 @@ export declare class V2ApiPackageSearchService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static packageSearchReadFileV2V2PackageSearchReadFilePost(requestBody: PackageSearchReadFileRequest): CancelablePromise<any>;
+    static packageSearchReadFileV2V2PackagesReadPost(requestBody: PackageSearchReadFileRequest): CancelablePromise<any>;
+    /**
+     * Semantic package search
+     * Hybrid semantic + keyword search over package source. 1-5 natural language queries.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static packageSearchHybridV2V2PackagesSearchPost(requestBody: PackageSearchHybridRequest): CancelablePromise<any>;
 }

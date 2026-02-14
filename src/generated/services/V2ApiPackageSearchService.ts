@@ -16,32 +16,12 @@ export class V2ApiPackageSearchService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static packageSearchGrepV2V2PackageSearchGrepPost(
+    public static packageSearchGrepV2V2PackagesGrepPost(
         requestBody: PackageSearchGrepRequest,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/package-search/grep',
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     * Semantic package search
-     * Hybrid semantic + keyword search over package source. 1-5 natural language queries.
-     * @param requestBody
-     * @returns any Successful Response
-     * @throws ApiError
-     */
-    public static packageSearchHybridV2V2PackageSearchHybridPost(
-        requestBody: PackageSearchHybridRequest,
-    ): CancelablePromise<any> {
-        return __request(OpenAPI, {
-            method: 'POST',
-            url: '/package-search/hybrid',
+            url: '/packages/grep',
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -56,12 +36,32 @@ export class V2ApiPackageSearchService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    public static packageSearchReadFileV2V2PackageSearchReadFilePost(
+    public static packageSearchReadFileV2V2PackagesReadPost(
         requestBody: PackageSearchReadFileRequest,
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/package-search/read-file',
+            url: '/packages/read',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Semantic package search
+     * Hybrid semantic + keyword search over package source. 1-5 natural language queries.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static packageSearchHybridV2V2PackagesSearchPost(
+        requestBody: PackageSearchHybridRequest,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/packages/search',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

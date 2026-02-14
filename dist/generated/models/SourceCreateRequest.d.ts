@@ -23,6 +23,9 @@ export type SourceCreateRequest = {
     is_pdf?: (boolean | null);
     display_name?: (string | null);
     focus_instructions?: (string | null);
+    extract_branding?: (boolean | null);
+    extract_images?: (boolean | null);
+    config?: (string | null);
     folder_name?: (string | null);
     folder_path?: (string | null);
     files?: (Array<FileItem> | null);

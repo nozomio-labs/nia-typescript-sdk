@@ -11,8 +11,6 @@ export { GithubSearchService } from './services/GithubSearchService';
 export { V2ApiService } from './services/V2ApiService';
 export { V2ApiCategoriesService } from './services/V2ApiCategoriesService';
 export { V2ApiContextsService } from './services/V2ApiContextsService';
-export { V2ApiDataSourcesService } from './services/V2ApiDataSourcesService';
 export { V2ApiPackageSearchService } from './services/V2ApiPackageSearchService';
-export { V2ApiRepositoriesService } from './services/V2ApiRepositoriesService';
 export { V2ApiSearchService } from './services/V2ApiSearchService';
 export { V2ApiSourcesService } from './services/V2ApiSourcesService';

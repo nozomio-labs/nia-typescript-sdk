@@ -67,6 +67,24 @@ export class V2ApiSourcesService {
         });
     }
     /**
+     * Subscribe to a global source
+     * Subscribe to an existing globally indexed public source. Creates a local reference for instant access without re-indexing.
+     * @param requestBody
+     * @returns GlobalSourceSubscribeResponse Successful Response
+     * @throws ApiError
+     */
+    static subscribeSourceV2SourcesSubscribePost(requestBody) {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/subscribe',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Get Source
      * @param sourceId
      * @param type Source type hint
@@ -222,6 +240,31 @@ export class V2ApiSourcesService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/sources/{source_id}/grep',
+            path: {
+                'source_id': sourceId,
+            },
+            query: {
+                'type': type,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Sync Source
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static syncSourceV2SourcesSourceIdSyncPost(sourceId, requestBody, type) {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/{source_id}/sync',
             path: {
                 'source_id': sourceId,
             },
