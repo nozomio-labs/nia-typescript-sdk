@@ -39,6 +39,8 @@ import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
 import type { SourceUpdateRequest } from '../models/SourceUpdateRequest';
+import type { SourceUploadUrlRequest } from '../models/SourceUploadUrlRequest';
+import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse';
 import type { TracerRequest } from '../models/TracerRequest';
 import type { UniversalSearchRequestWithMode } from '../models/UniversalSearchRequestWithMode';
 import type { UsageSummaryResponse } from '../models/UsageSummaryResponse';
@@ -799,6 +801,26 @@ export class V2ApiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/sources/subscribe',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get PDF upload URL
+     * Generate a signed URL for direct PDF upload. Use the returned gcs_path in POST /v2/sources.
+     * @param requestBody
+     * @returns SourceUploadUrlResponse Successful Response
+     * @throws ApiError
+     */
+    public static createSourceUploadUrlV2SourcesUploadUrlPost(
+        requestBody: SourceUploadUrlRequest,
+    ): CancelablePromise<SourceUploadUrlResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/upload-url',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

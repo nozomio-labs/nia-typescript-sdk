@@ -7,6 +7,8 @@ import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
 import type { SourceUpdateRequest } from '../models/SourceUpdateRequest';
+import type { SourceUploadUrlRequest } from '../models/SourceUploadUrlRequest';
+import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 export declare class V2ApiSourcesService {
     /**
@@ -44,6 +46,14 @@ export declare class V2ApiSourcesService {
      * @throws ApiError
      */
     static subscribeSourceV2SourcesSubscribePost(requestBody: GlobalSourceSubscribeRequest): CancelablePromise<GlobalSourceSubscribeResponse>;
+    /**
+     * Get PDF upload URL
+     * Generate a signed URL for direct PDF upload. Use the returned gcs_path in POST /v2/sources.
+     * @param requestBody
+     * @returns SourceUploadUrlResponse Successful Response
+     * @throws ApiError
+     */
+    static createSourceUploadUrlV2SourcesUploadUrlPost(requestBody: SourceUploadUrlRequest): CancelablePromise<SourceUploadUrlResponse>;
     /**
      * Get Source
      * @param sourceId

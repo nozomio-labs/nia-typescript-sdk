@@ -671,6 +671,24 @@ export class V2ApiService {
         });
     }
     /**
+     * Get PDF upload URL
+     * Generate a signed URL for direct PDF upload. Use the returned gcs_path in POST /v2/sources.
+     * @param requestBody
+     * @returns SourceUploadUrlResponse Successful Response
+     * @throws ApiError
+     */
+    static createSourceUploadUrlV2SourcesUploadUrlPost(requestBody) {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/upload-url',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Get Source
      * @param sourceId
      * @param type Source type hint

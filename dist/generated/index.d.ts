@@ -64,6 +64,8 @@ export type { SourceDeleteResponse } from './models/SourceDeleteResponse';
 export type { SourceListResponse } from './models/SourceListResponse';
 export type { SourceResolveResponse } from './models/SourceResolveResponse';
 export type { SourceUpdateRequest } from './models/SourceUpdateRequest';
+export type { SourceUploadUrlRequest } from './models/SourceUploadUrlRequest';
+export type { SourceUploadUrlResponse } from './models/SourceUploadUrlResponse';
 export type { SubscriptionResultItem } from './models/SubscriptionResultItem';
 export type { SubscriptionResults } from './models/SubscriptionResults';
 export type { SubscriptionSummary } from './models/SubscriptionSummary';

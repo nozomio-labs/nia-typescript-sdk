@@ -26,6 +26,7 @@ export type SourceCreateRequest = {
     add_as_global_source?: (boolean | null);
     is_pdf?: (boolean | null);
     display_name?: (string | null);
+    gcs_path?: (string | null);
     focus_instructions?: (string | null);
     extract_branding?: (boolean | null);
     extract_images?: (boolean | null);
