@@ -1,3 +1,4 @@
+import type { DailyUsage1MResponse } from '../models/DailyUsage1MResponse';
 import type { OracleResearchRequest } from '../models/OracleResearchRequest';
 import type { OracleSessionChatRequest } from '../models/OracleSessionChatRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -10,6 +11,13 @@ export declare class DefaultService {
      * @throws ApiError
      */
     static oracleResearchV2OraclePost(requestBody: OracleResearchRequest): CancelablePromise<any>;
+    /**
+     * Get 1M Usage
+     * Get daily usage for 1M context window models.
+     * @returns DailyUsage1MResponse Successful Response
+     * @throws ApiError
+     */
+    static get1MUsageV2Oracle1MUsageGet(): CancelablePromise<DailyUsage1MResponse>;
     /**
      * Create Oracle Job
      * Create a new Oracle research job.

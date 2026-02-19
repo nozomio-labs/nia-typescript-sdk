@@ -22,6 +22,7 @@ export type { ContextSemanticSearchSuggestions } from './models/ContextSemanticS
 export type { ContextShareRequest } from './models/ContextShareRequest';
 export type { ContextShareResponse } from './models/ContextShareResponse';
 export type { ContextShareUpdateRequest } from './models/ContextShareUpdateRequest';
+export type { DailyUsage1MResponse } from './models/DailyUsage1MResponse';
 export type { DatabaseFileItem } from './models/DatabaseFileItem';
 export type { DeepResearchRequestWithMode } from './models/DeepResearchRequestWithMode';
 export type { DeleteResponse } from './models/DeleteResponse';

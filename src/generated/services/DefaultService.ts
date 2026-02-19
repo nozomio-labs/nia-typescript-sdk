@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { DailyUsage1MResponse } from '../models/DailyUsage1MResponse';
 import type { OracleResearchRequest } from '../models/OracleResearchRequest';
 import type { OracleSessionChatRequest } from '../models/OracleSessionChatRequest';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -26,6 +27,18 @@ export class DefaultService {
             errors: {
                 422: `Validation Error`,
             },
+        });
+    }
+    /**
+     * Get 1M Usage
+     * Get daily usage for 1M context window models.
+     * @returns DailyUsage1MResponse Successful Response
+     * @throws ApiError
+     */
+    public static get1MUsageV2Oracle1MUsageGet(): CancelablePromise<DailyUsage1MResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/oracle/1m-usage',
         });
     }
     /**

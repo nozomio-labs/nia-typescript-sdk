@@ -20,6 +20,18 @@ export class DefaultService {
         });
     }
     /**
+     * Get 1M Usage
+     * Get daily usage for 1M context window models.
+     * @returns DailyUsage1MResponse Successful Response
+     * @throws ApiError
+     */
+    static get1MUsageV2Oracle1MUsageGet() {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/oracle/1m-usage',
+        });
+    }
+    /**
      * Create Oracle Job
      * Create a new Oracle research job.
      *
