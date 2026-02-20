@@ -29,7 +29,7 @@ export class V2ApiSourcesService {
      * @throws ApiError
      */
     public static listSourcesV2SourcesGet(
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
         query?: (string | null),
         status?: (string | null),
         categoryId?: (string | null),
@@ -80,7 +80,7 @@ export class V2ApiSourcesService {
      */
     public static resolveSourceV2SourcesResolveGet(
         identifier: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<SourceResolveResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -143,7 +143,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceV2SourcesSourceIdGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -170,7 +170,7 @@ export class V2ApiSourcesService {
     public static updateSourceV2SourcesSourceIdPatch(
         sourceId: string,
         requestBody: SourceUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -197,7 +197,7 @@ export class V2ApiSourcesService {
      */
     public static deleteSourceV2SourcesSourceIdDelete(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<SourceDeleteResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -222,7 +222,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceClassificationV2SourcesSourceIdClassificationGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -249,7 +249,7 @@ export class V2ApiSourcesService {
     public static updateSourceClassificationV2SourcesSourceIdClassificationPatch(
         sourceId: string,
         requestBody: ClassifyLocalFolderRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -279,7 +279,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceContentV2SourcesSourceIdContentGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
         path?: (string | null),
         url?: (string | null),
         branch?: (string | null),
@@ -312,7 +312,7 @@ export class V2ApiSourcesService {
     public static grepSourceV2SourcesSourceIdGrepPost(
         sourceId: string,
         requestBody: Record<string, any>,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -341,7 +341,7 @@ export class V2ApiSourcesService {
     public static syncSourceV2SourcesSourceIdSyncPost(
         sourceId: string,
         requestBody: Record<string, any>,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -370,7 +370,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceTreeV2SourcesSourceIdTreeGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null),
         branch?: (string | null),
         maxDepth: number = 10,
     ): CancelablePromise<any> {

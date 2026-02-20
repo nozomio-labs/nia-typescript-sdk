@@ -29,6 +29,11 @@ import type { QuerySearchRequest } from '../models/QuerySearchRequest';
 import type { routes__v2__categories__CategoryCreate } from '../models/routes__v2__categories__CategoryCreate';
 import type { routes__v2__categories__CategoryUpdate } from '../models/routes__v2__categories__CategoryUpdate';
 import type { routes__v2__dependencies__SubscribeResponse } from '../models/routes__v2__dependencies__SubscribeResponse';
+import type { routes__v2__slack__SlackChannelsConfigRequest } from '../models/routes__v2__slack__SlackChannelsConfigRequest';
+import type { SlackGrepRequest } from '../models/SlackGrepRequest';
+import type { SlackInstallRequest } from '../models/SlackInstallRequest';
+import type { SlackOAuthCallbackRequest } from '../models/SlackOAuthCallbackRequest';
+import type { SlackTokenRequest } from '../models/SlackTokenRequest';
 import type { Source } from '../models/Source';
 import type { SourceCreateRequest } from '../models/SourceCreateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
@@ -304,6 +309,110 @@ export declare class V2ApiService {
      */
     static unifiedSearchV2V2SearchPost(requestBody: (QuerySearchRequest | WebSearchRequestWithMode | DeepResearchRequestWithMode | UniversalSearchRequestWithMode)): CancelablePromise<any>;
     /**
+     * Generate Install Url
+     * Generate a Slack OAuth authorization URL.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static generateInstallUrlV2SlackInstallPost(requestBody: SlackInstallRequest): CancelablePromise<any>;
+    /**
+     * Handle Oauth Callback
+     * Exchange an OAuth code for tokens and create the installation.
+     *
+     * Called by the frontend callback route after the user authorizes the Slack app.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static handleOauthCallbackV2SlackInstallCallbackPost(requestBody: SlackOAuthCallbackRequest): CancelablePromise<any>;
+    /**
+     * Register External Token
+     * Register an external Slack bot token (BYOT).
+     *
+     * For multi-tenant scenarios: your customers provide their Slack bot token
+     * and you manage it through Nia's API.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static registerExternalTokenV2SlackInstallTokenPost(requestBody: SlackTokenRequest): CancelablePromise<any>;
+    /**
+     * List Slack Installations
+     * List all Slack workspace connections for the authenticated user/org.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listSlackInstallationsV2SlackInstallationsGet(): CancelablePromise<any>;
+    /**
+     * Get Slack Installation
+     * Get details for a specific Slack installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getSlackInstallationV2SlackInstallationsInstallationIdGet(installationId: string): CancelablePromise<any>;
+    /**
+     * Delete Slack Installation
+     * Disconnect a Slack workspace.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static deleteSlackInstallationV2SlackInstallationsInstallationIdDelete(installationId: string): CancelablePromise<any>;
+    /**
+     * List Slack Channels
+     * List available Slack channels from the workspace.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listSlackChannelsV2SlackInstallationsInstallationIdChannelsGet(installationId: string): CancelablePromise<any>;
+    /**
+     * Configure Slack Channels
+     * Configure which channels to index.
+     * @param installationId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static configureSlackChannelsV2SlackInstallationsInstallationIdChannelsPost(installationId: string, requestBody: routes__v2__slack__SlackChannelsConfigRequest): CancelablePromise<any>;
+    /**
+     * Grep Slack Messages
+     * BM25 keyword search over indexed Slack messages in TurboPuffer.
+     * @param installationId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static grepSlackMessagesV2SlackInstallationsInstallationIdGrepPost(installationId: string, requestBody: SlackGrepRequest): CancelablePromise<any>;
+    /**
+     * Trigger Slack Index
+     * Trigger a full re-index of the Slack workspace.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static triggerSlackIndexV2SlackInstallationsInstallationIdIndexPost(installationId: string): CancelablePromise<any>;
+    /**
+     * Read Slack Messages
+     * Read recent messages from a Slack channel (live from Slack API).
+     * @param installationId
+     * @param channel
+     * @param limit
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static readSlackMessagesV2SlackInstallationsInstallationIdMessagesGet(installationId: string, channel?: (string | null), limit?: number): CancelablePromise<any>;
+    /**
+     * Get Slack Index Status
+     * Get the indexing status for a Slack workspace.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getSlackIndexStatusV2SlackInstallationsInstallationIdStatusGet(installationId: string): CancelablePromise<any>;
+    /**
      * List Sources
      * @param type Filter by source type
      * @param query Search by name or identifier
@@ -314,7 +423,7 @@ export declare class V2ApiService {
      * @returns SourceListResponse Successful Response
      * @throws ApiError
      */
-    static listSourcesV2SourcesGet(type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null), query?: (string | null), status?: (string | null), categoryId?: (string | null), limit?: number, offset?: number): CancelablePromise<SourceListResponse>;
+    static listSourcesV2SourcesGet(type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null), query?: (string | null), status?: (string | null), categoryId?: (string | null), limit?: number, offset?: number): CancelablePromise<SourceListResponse>;
     /**
      * Create Source
      * @param requestBody
@@ -329,7 +438,7 @@ export declare class V2ApiService {
      * @returns SourceResolveResponse Successful Response
      * @throws ApiError
      */
-    static resolveSourceV2SourcesResolveGet(identifier: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<SourceResolveResponse>;
+    static resolveSourceV2SourcesResolveGet(identifier: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<SourceResolveResponse>;
     /**
      * Subscribe to a global source
      * Subscribe to an existing globally indexed public source. Creates a local reference for instant access without re-indexing.
@@ -353,7 +462,7 @@ export declare class V2ApiService {
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static getSourceV2SourcesSourceIdGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<Source>;
+    static getSourceV2SourcesSourceIdGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<Source>;
     /**
      * Update Source
      * @param sourceId
@@ -362,7 +471,7 @@ export declare class V2ApiService {
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static updateSourceV2SourcesSourceIdPatch(sourceId: string, requestBody: SourceUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<Source>;
+    static updateSourceV2SourcesSourceIdPatch(sourceId: string, requestBody: SourceUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<Source>;
     /**
      * Delete Source
      * @param sourceId
@@ -370,7 +479,7 @@ export declare class V2ApiService {
      * @returns SourceDeleteResponse Successful Response
      * @throws ApiError
      */
-    static deleteSourceV2SourcesSourceIdDelete(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<SourceDeleteResponse>;
+    static deleteSourceV2SourcesSourceIdDelete(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<SourceDeleteResponse>;
     /**
      * Get Source Classification
      * @param sourceId
@@ -378,7 +487,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static getSourceClassificationV2SourcesSourceIdClassificationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<any>;
+    static getSourceClassificationV2SourcesSourceIdClassificationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<any>;
     /**
      * Update Source Classification
      * @param sourceId
@@ -387,7 +496,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static updateSourceClassificationV2SourcesSourceIdClassificationPatch(sourceId: string, requestBody: ClassifyLocalFolderRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<any>;
+    static updateSourceClassificationV2SourcesSourceIdClassificationPatch(sourceId: string, requestBody: ClassifyLocalFolderRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<any>;
     /**
      * Get Source Content
      * @param sourceId
@@ -398,7 +507,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static getSourceContentV2SourcesSourceIdContentGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null), path?: (string | null), url?: (string | null), branch?: (string | null)): CancelablePromise<any>;
+    static getSourceContentV2SourcesSourceIdContentGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null), path?: (string | null), url?: (string | null), branch?: (string | null)): CancelablePromise<any>;
     /**
      * Grep Source
      * @param sourceId
@@ -407,7 +516,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static grepSourceV2SourcesSourceIdGrepPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<any>;
+    static grepSourceV2SourcesSourceIdGrepPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<any>;
     /**
      * Sync Source
      * @param sourceId
@@ -416,7 +525,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static syncSourceV2SourcesSourceIdSyncPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null)): CancelablePromise<any>;
+    static syncSourceV2SourcesSourceIdSyncPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null)): CancelablePromise<any>;
     /**
      * Get Source Tree
      * @param sourceId
@@ -426,7 +535,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static getSourceTreeV2SourcesSourceIdTreeGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | null), branch?: (string | null), maxDepth?: number): CancelablePromise<any>;
+    static getSourceTreeV2SourcesSourceIdTreeGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | null), branch?: (string | null), maxDepth?: number): CancelablePromise<any>;
     /**
      * Get usage summary
      * Get usage counts and limits for current billing period (queries, indexing, oracle, etc.).

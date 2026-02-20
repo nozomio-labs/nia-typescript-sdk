@@ -13,4 +13,5 @@ export { V2ApiCategoriesService } from './services/V2ApiCategoriesService';
 export { V2ApiContextsService } from './services/V2ApiContextsService';
 export { V2ApiPackageSearchService } from './services/V2ApiPackageSearchService';
 export { V2ApiSearchService } from './services/V2ApiSearchService';
+export { V2ApiSlackService } from './services/V2ApiSlackService';
 export { V2ApiSourcesService } from './services/V2ApiSourcesService';

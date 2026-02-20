@@ -1,7 +1,7 @@
 import type { DatabaseFileItem } from './DatabaseFileItem';
 import type { FileItem } from './FileItem';
 export type SourceCreateRequest = {
-    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder';
+    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack';
     repository?: (string | null);
     branch?: (string | null);
     ref?: (string | null);
@@ -31,4 +31,5 @@ export type SourceCreateRequest = {
     folder_path?: (string | null);
     files?: (Array<FileItem> | null);
     database?: (DatabaseFileItem | null);
+    slack_installation_id?: (string | null);
 };

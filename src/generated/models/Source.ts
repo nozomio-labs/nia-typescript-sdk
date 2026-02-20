@@ -13,7 +13,7 @@ export type Source = {
     /**
      * Source type
      */
-    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder';
+    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack';
     /**
      * Canonical identifier (repo slug, URL, or folder path)
      */

@@ -13,7 +13,7 @@ export type SourceResolveResponse = {
     /**
      * Resolved source type
      */
-    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder';
+    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack';
     /**
      * Display name
      */

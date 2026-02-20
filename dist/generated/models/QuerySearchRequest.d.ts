@@ -1,4 +1,5 @@
 import type { LocalSourceFilters } from './LocalSourceFilters';
+import type { SlackSearchFilters } from './SlackSearchFilters';
 export type QuerySearchRequest = {
     /**
      * List of chat messages
@@ -16,6 +17,14 @@ export type QuerySearchRequest = {
      * List of local folders to query. Can be strings (display_name or local_folder_id) or dicts with 'local_folder_id' or 'identifier' fields. Local folders are private and user-scoped.
      */
     local_folders?: Array<(string | Record<string, any>)>;
+    /**
+     * List of Slack installation IDs to include in search
+     */
+    slack_workspaces?: Array<string>;
+    /**
+     * Filters for Slack message results (channels, users, date range)
+     */
+    slack_filters?: (SlackSearchFilters | null);
     /**
      * Filter local folder results by classification category (e.g., 'Work', 'Personal')
      */
