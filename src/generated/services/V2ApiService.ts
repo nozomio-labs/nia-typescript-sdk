@@ -6,6 +6,8 @@ import type { AdvisorRequest } from '../models/AdvisorRequest';
 import type { AdvisorResponse } from '../models/AdvisorResponse';
 import type { AnalyzeResponse } from '../models/AnalyzeResponse';
 import type { Body_upload_and_subscribe_v2_dependencies_upload_post } from '../models/Body_upload_and_subscribe_v2_dependencies_upload_post';
+import type { BootstrapKeyRequest } from '../models/BootstrapKeyRequest';
+import type { BootstrapKeyResponse } from '../models/BootstrapKeyResponse';
 import type { BulkDeleteRequest } from '../models/BulkDeleteRequest';
 import type { BulkDeleteResponse } from '../models/BulkDeleteResponse';
 import type { CategoryListCompatResponse } from '../models/CategoryListCompatResponse';
@@ -26,6 +28,8 @@ import type { GitHubReadRequest } from '../models/GitHubReadRequest';
 import type { GitHubSearchRequest } from '../models/GitHubSearchRequest';
 import type { GlobalSourceSubscribeRequest } from '../models/GlobalSourceSubscribeRequest';
 import type { GlobalSourceSubscribeResponse } from '../models/GlobalSourceSubscribeResponse';
+import type { LoginKeyRequest } from '../models/LoginKeyRequest';
+import type { LoginKeyResponse } from '../models/LoginKeyResponse';
 import type { PackageSearchGrepRequest } from '../models/PackageSearchGrepRequest';
 import type { PackageSearchHybridRequest } from '../models/PackageSearchHybridRequest';
 import type { PackageSearchReadFileRequest } from '../models/PackageSearchReadFileRequest';
@@ -34,6 +38,8 @@ import type { routes__v2__categories__CategoryCreate } from '../models/routes__v
 import type { routes__v2__categories__CategoryUpdate } from '../models/routes__v2__categories__CategoryUpdate';
 import type { routes__v2__dependencies__SubscribeResponse } from '../models/routes__v2__dependencies__SubscribeResponse';
 import type { routes__v2__slack__SlackChannelsConfigRequest } from '../models/routes__v2__slack__SlackChannelsConfigRequest';
+import type { SignupRequest } from '../models/SignupRequest';
+import type { SignupResponse } from '../models/SignupResponse';
 import type { SlackGrepRequest } from '../models/SlackGrepRequest';
 import type { SlackInstallRequest } from '../models/SlackInstallRequest';
 import type { SlackOAuthCallbackRequest } from '../models/SlackOAuthCallbackRequest';
@@ -67,6 +73,74 @@ export class V2ApiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/advisor',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Bootstrap Key
+     * Exchange a bootstrap token for an nk_ API key (one-time use).
+     *
+     * The returned api_key is shown only once — store it securely.
+     * @param requestBody
+     * @returns BootstrapKeyResponse Successful Response
+     * @throws ApiError
+     */
+    public static bootstrapKeyV2AuthBootstrapKeyPost(
+        requestBody: BootstrapKeyRequest,
+    ): CancelablePromise<BootstrapKeyResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/bootstrap-key',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Login Key
+     * Authenticate with email + password and receive a new nk_ API key.
+     *
+     * For returning users who already have an account but need a new key
+     * (e.g. an AI agent setting up in a new environment).
+     * @param requestBody
+     * @returns LoginKeyResponse Successful Response
+     * @throws ApiError
+     */
+    public static loginKeyV2AuthLoginKeyPost(
+        requestBody: LoginKeyRequest,
+    ): CancelablePromise<LoginKeyResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/login-key',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Signup
+     * Create a new account and receive a bootstrap token.
+     *
+     * The bootstrap token can be exchanged exactly once via POST /v2/auth/bootstrap-key
+     * to obtain an nk_ API key.
+     * @param requestBody
+     * @returns SignupResponse Successful Response
+     * @throws ApiError
+     */
+    public static signupV2AuthSignupPost(
+        requestBody: SignupRequest,
+    ): CancelablePromise<SignupResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/signup',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

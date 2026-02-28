@@ -6,6 +6,7 @@ export { ApiError } from './core/ApiError';
 export { CancelablePromise, CancelError } from './core/CancelablePromise';
 export { OpenAPI } from './core/OpenAPI';
 export { AdvisorService } from './services/AdvisorService';
+export { AuthBootstrapService } from './services/AuthBootstrapService';
 export { DefaultService } from './services/DefaultService';
 export { GithubSearchService } from './services/GithubSearchService';
 export { V2ApiService } from './services/V2ApiService';
