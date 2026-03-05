@@ -8,7 +8,7 @@ export type SourceUploadUrlRequest = {
      */
     filename: string;
     /**
-     * MIME type. Currently only application/pdf is supported.
+     * MIME type for upload (PDF, CSV, TSV, XLS, XLSX)
      */
     content_type?: string;
 };
