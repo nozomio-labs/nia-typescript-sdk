@@ -9,7 +9,7 @@ export type Source = {
     /**
      * Source type
      */
-    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack';
+    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive';
     /**
      * Canonical identifier (repo slug, URL, or folder path)
      */
