@@ -50,7 +50,13 @@ import type { SlackInstallRequest } from '../models/SlackInstallRequest';
 import type { SlackOAuthCallbackRequest } from '../models/SlackOAuthCallbackRequest';
 import type { SlackTokenRequest } from '../models/SlackTokenRequest';
 import type { Source } from '../models/Source';
+import type { SourceAnnotation } from '../models/SourceAnnotation';
+import type { SourceAnnotationCreateRequest } from '../models/SourceAnnotationCreateRequest';
+import type { SourceAnnotationUpdateRequest } from '../models/SourceAnnotationUpdateRequest';
+import type { SourceContentResponse } from '../models/SourceContentResponse';
 import type { SourceCreateRequest } from '../models/SourceCreateRequest';
+import type { SourceCurationResponse } from '../models/SourceCurationResponse';
+import type { SourceCurationUpdateRequest } from '../models/SourceCurationUpdateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
@@ -1488,6 +1494,120 @@ export class V2ApiService {
         });
     }
     /**
+     * List Source Annotations
+     * @param sourceId
+     * @param type Source type hint
+     * @returns SourceAnnotation Successful Response
+     * @throws ApiError
+     */
+    public static listSourceAnnotationsV2SourcesSourceIdAnnotationsGet(
+        sourceId: string,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+    ): CancelablePromise<Array<SourceAnnotation>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/sources/{source_id}/annotations',
+            path: {
+                'source_id': sourceId,
+            },
+            query: {
+                'type': type,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Create Source Annotation
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    public static createSourceAnnotationV2SourcesSourceIdAnnotationsPost(
+        sourceId: string,
+        requestBody: SourceAnnotationCreateRequest,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+    ): CancelablePromise<SourceCurationResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/sources/{source_id}/annotations',
+            path: {
+                'source_id': sourceId,
+            },
+            query: {
+                'type': type,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Update Source Annotation
+     * @param sourceId
+     * @param annotationId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    public static updateSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdPatch(
+        sourceId: string,
+        annotationId: string,
+        requestBody: SourceAnnotationUpdateRequest,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+    ): CancelablePromise<SourceCurationResponse> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/sources/{source_id}/annotations/{annotation_id}',
+            path: {
+                'source_id': sourceId,
+                'annotation_id': annotationId,
+            },
+            query: {
+                'type': type,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Delete Source Annotation
+     * @param sourceId
+     * @param annotationId
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    public static deleteSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdDelete(
+        sourceId: string,
+        annotationId: string,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+    ): CancelablePromise<SourceCurationResponse> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/sources/{source_id}/annotations/{annotation_id}',
+            path: {
+                'source_id': sourceId,
+                'annotation_id': annotationId,
+            },
+            query: {
+                'type': type,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Get Source Classification
      * @param sourceId
      * @param type Source type hint
@@ -1548,7 +1668,12 @@ export class V2ApiService {
      * @param path Path or virtual path
      * @param url Direct URL (documentation)
      * @param branch Repository branch
-     * @returns any Successful Response
+     * @param page PDF page number
+     * @param treeNodeId PDF tree node identifier
+     * @param lineStart Starting line number
+     * @param lineEnd Ending line number
+     * @param maxLength Maximum content length
+     * @returns SourceContentResponse Successful Response
      * @throws ApiError
      */
     public static getSourceContentV2SourcesSourceIdContentGet(
@@ -1557,7 +1682,12 @@ export class V2ApiService {
         path?: (string | null),
         url?: (string | null),
         branch?: (string | null),
-    ): CancelablePromise<any> {
+        page?: (number | null),
+        treeNodeId?: (string | null),
+        lineStart?: (number | null),
+        lineEnd?: (number | null),
+        maxLength?: (number | null),
+    ): CancelablePromise<SourceContentResponse> {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/sources/{source_id}/content',
@@ -1569,7 +1699,66 @@ export class V2ApiService {
                 'path': path,
                 'url': url,
                 'branch': branch,
+                'page': page,
+                'tree_node_id': treeNodeId,
+                'line_start': lineStart,
+                'line_end': lineEnd,
+                'max_length': maxLength,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Source Curation
+     * @param sourceId
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    public static getSourceCurationV2SourcesSourceIdCurationGet(
+        sourceId: string,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+    ): CancelablePromise<SourceCurationResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/sources/{source_id}/curation',
+            path: {
+                'source_id': sourceId,
+            },
+            query: {
+                'type': type,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Update Source Curation
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    public static updateSourceCurationV2SourcesSourceIdCurationPut(
+        sourceId: string,
+        requestBody: SourceCurationUpdateRequest,
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+    ): CancelablePromise<SourceCurationResponse> {
+        return __request(OpenAPI, {
+            method: 'PUT',
+            url: '/sources/{source_id}/curation',
+            path: {
+                'source_id': sourceId,
+            },
+            query: {
+                'type': type,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

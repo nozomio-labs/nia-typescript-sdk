@@ -46,7 +46,13 @@ import type { SlackInstallRequest } from '../models/SlackInstallRequest';
 import type { SlackOAuthCallbackRequest } from '../models/SlackOAuthCallbackRequest';
 import type { SlackTokenRequest } from '../models/SlackTokenRequest';
 import type { Source } from '../models/Source';
+import type { SourceAnnotation } from '../models/SourceAnnotation';
+import type { SourceAnnotationCreateRequest } from '../models/SourceAnnotationCreateRequest';
+import type { SourceAnnotationUpdateRequest } from '../models/SourceAnnotationUpdateRequest';
+import type { SourceContentResponse } from '../models/SourceContentResponse';
 import type { SourceCreateRequest } from '../models/SourceCreateRequest';
+import type { SourceCurationResponse } from '../models/SourceCurationResponse';
+import type { SourceCurationUpdateRequest } from '../models/SourceCurationUpdateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
@@ -607,6 +613,42 @@ export declare class V2ApiService {
      */
     static deleteSourceV2SourcesSourceIdDelete(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceDeleteResponse>;
     /**
+     * List Source Annotations
+     * @param sourceId
+     * @param type Source type hint
+     * @returns SourceAnnotation Successful Response
+     * @throws ApiError
+     */
+    static listSourceAnnotationsV2SourcesSourceIdAnnotationsGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<Array<SourceAnnotation>>;
+    /**
+     * Create Source Annotation
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    static createSourceAnnotationV2SourcesSourceIdAnnotationsPost(sourceId: string, requestBody: SourceAnnotationCreateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    /**
+     * Update Source Annotation
+     * @param sourceId
+     * @param annotationId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    static updateSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdPatch(sourceId: string, annotationId: string, requestBody: SourceAnnotationUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    /**
+     * Delete Source Annotation
+     * @param sourceId
+     * @param annotationId
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    static deleteSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdDelete(sourceId: string, annotationId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    /**
      * Get Source Classification
      * @param sourceId
      * @param type Source type hint
@@ -630,10 +672,32 @@ export declare class V2ApiService {
      * @param path Path or virtual path
      * @param url Direct URL (documentation)
      * @param branch Repository branch
-     * @returns any Successful Response
+     * @param page PDF page number
+     * @param treeNodeId PDF tree node identifier
+     * @param lineStart Starting line number
+     * @param lineEnd Ending line number
+     * @param maxLength Maximum content length
+     * @returns SourceContentResponse Successful Response
      * @throws ApiError
      */
-    static getSourceContentV2SourcesSourceIdContentGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null), path?: (string | null), url?: (string | null), branch?: (string | null)): CancelablePromise<any>;
+    static getSourceContentV2SourcesSourceIdContentGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null), path?: (string | null), url?: (string | null), branch?: (string | null), page?: (number | null), treeNodeId?: (string | null), lineStart?: (number | null), lineEnd?: (number | null), maxLength?: (number | null)): CancelablePromise<SourceContentResponse>;
+    /**
+     * Get Source Curation
+     * @param sourceId
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    static getSourceCurationV2SourcesSourceIdCurationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    /**
+     * Update Source Curation
+     * @param sourceId
+     * @param requestBody
+     * @param type Source type hint
+     * @returns SourceCurationResponse Successful Response
+     * @throws ApiError
+     */
+    static updateSourceCurationV2SourcesSourceIdCurationPut(sourceId: string, requestBody: SourceCurationUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
     /**
      * Grep Source
      * @param sourceId

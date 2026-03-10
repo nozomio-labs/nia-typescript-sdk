@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { LocalSourceFilters } from './LocalSourceFilters';
 import type { SlackSearchFilters } from './SlackSearchFilters';
+import type { SourceTrustFilter } from './SourceTrustFilter';
 export type QuerySearchRequest = {
     /**
      * List of chat messages
@@ -37,6 +38,10 @@ export type QuerySearchRequest = {
      * Filters for local/personal sources (messages, contacts, etc.)
      */
     local_source_filters?: (LocalSourceFilters | null);
+    /**
+     * Optional trust-aware filtering for curated source results
+     */
+    source_trust_filter?: (SourceTrustFilter | null);
     /**
      * Search mode: 'repositories', 'sources', or 'unified'
      */

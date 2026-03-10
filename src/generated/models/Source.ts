@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { SourceCurationSummary } from './SourceCurationSummary';
 /**
  * Unified source representation.
  */
@@ -54,5 +55,9 @@ export type Source = {
      * Type-specific metadata
      */
     metadata?: Record<string, any>;
+    /**
+     * Trust signals and curated guidance summary
+     */
+    curation?: (SourceCurationSummary | null);
 };
 
