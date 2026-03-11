@@ -1,13 +1,32 @@
 {
   "name": "nia-ai-ts",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Nia TypeScript SDK",
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "homepage": "https://docs.trynia.ai",
+  "keywords": [
+    "nia",
+    "sdk",
+    "typescript",
+    "search",
+    "rag"
+  ],
+  "license": "AGPL-3.0",
   "scripts": {
     "build": "bunx tsc -p tsconfig.json",
     "generate": "python3 ../../backend/scripts/sync_sdk.py --skip-python"

@@ -87,6 +87,10 @@ export type QuerySearchRequest = {
      */
     include_follow_ups?: boolean;
     /**
+     * Active E2E decrypt session ID. When provided, encrypted local folder results are decrypted through the desktop bridge before synthesis.
+     */
+    e2e_session_id?: (string | null);
+    /**
      * Search mode discriminator
      */
     mode?: string;
