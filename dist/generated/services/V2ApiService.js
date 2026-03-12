@@ -1138,6 +1138,18 @@ export class V2ApiService {
         });
     }
     /**
+     * Get sources summary
+     * Get counts and recent names for all source types. Designed for quick inventory checks.
+     * @returns SourcesSummaryResponse Successful Response
+     * @throws ApiError
+     */
+    static getSourcesSummaryV2SourcesSummaryGet() {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/sources-summary',
+        });
+    }
+    /**
      * Resolve Source
      * @param identifier Display name, URL, or slug
      * @param type Source type hint

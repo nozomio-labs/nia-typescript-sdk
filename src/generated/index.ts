@@ -94,8 +94,10 @@ export type { SourceCurationUpdateRequest } from './models/SourceCurationUpdateR
 export type { SourceDeleteResponse } from './models/SourceDeleteResponse';
 export type { SourceListResponse } from './models/SourceListResponse';
 export type { SourceResolveResponse } from './models/SourceResolveResponse';
+export type { SourcesSummaryResponse } from './models/SourcesSummaryResponse';
 export type { SourceTrustFilter } from './models/SourceTrustFilter';
 export type { SourceTrustSignals } from './models/SourceTrustSignals';
+export type { SourceTypeSummary } from './models/SourceTypeSummary';
 export type { SourceUpdateRequest } from './models/SourceUpdateRequest';
 export type { SourceUploadUrlRequest } from './models/SourceUploadUrlRequest';
 export type { SourceUploadUrlResponse } from './models/SourceUploadUrlResponse';

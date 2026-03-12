@@ -56,6 +56,7 @@ import type { SourceCurationUpdateRequest } from '../models/SourceCurationUpdate
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
+import type { SourcesSummaryResponse } from '../models/SourcesSummaryResponse';
 import type { SourceUpdateRequest } from '../models/SourceUpdateRequest';
 import type { SourceUploadUrlRequest } from '../models/SourceUploadUrlRequest';
 import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse';
@@ -563,6 +564,13 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static createSourceV2SourcesPost(requestBody: SourceCreateRequest): CancelablePromise<Source>;
+    /**
+     * Get sources summary
+     * Get counts and recent names for all source types. Designed for quick inventory checks.
+     * @returns SourcesSummaryResponse Successful Response
+     * @throws ApiError
+     */
+    static getSourcesSummaryV2SourcesSummaryGet(): CancelablePromise<SourcesSummaryResponse>;
     /**
      * Resolve Source
      * @param identifier Display name, URL, or slug

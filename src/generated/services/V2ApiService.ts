@@ -60,6 +60,7 @@ import type { SourceCurationUpdateRequest } from '../models/SourceCurationUpdate
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
+import type { SourcesSummaryResponse } from '../models/SourcesSummaryResponse';
 import type { SourceUpdateRequest } from '../models/SourceUpdateRequest';
 import type { SourceUploadUrlRequest } from '../models/SourceUploadUrlRequest';
 import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse';
@@ -1349,6 +1350,18 @@ export class V2ApiService {
             errors: {
                 422: `Validation Error`,
             },
+        });
+    }
+    /**
+     * Get sources summary
+     * Get counts and recent names for all source types. Designed for quick inventory checks.
+     * @returns SourcesSummaryResponse Successful Response
+     * @throws ApiError
+     */
+    public static getSourcesSummaryV2SourcesSummaryGet(): CancelablePromise<SourcesSummaryResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/sources-summary',
         });
     }
     /**
