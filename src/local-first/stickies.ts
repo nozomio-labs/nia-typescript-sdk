@@ -53,6 +53,7 @@ export function buildLocalStickiesSyncBatch({
     if (row.modifiedAt) maxTs = Math.max(maxTs, row.modifiedAt);
 
     const text = row.content?.trim();
+
     if (!text || text.length < 2) continue;
 
     const ts = row.modifiedAt
@@ -77,6 +78,10 @@ export function buildLocalStickiesSyncBatch({
   return {
     files,
     cursor: { lastSyncTimestamp: maxTs || Math.floor(Date.now() / 1000) },
-    stats: { extracted: files.length, chunks: files.length, dbType: "stickies" },
+    stats: {
+      extracted: files.length,
+      chunks: files.length,
+      dbType: "stickies",
+    },
   };
 }

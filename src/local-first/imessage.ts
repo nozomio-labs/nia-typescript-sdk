@@ -1,4 +1,3 @@
-import { matchesIMessageFilters, normalizeContactIdentifier } from "./filters";
 import type {
   LocalIMessageCursor,
   LocalIMessageFile,
@@ -6,6 +5,8 @@ import type {
   LocalIMessageSyncBatch,
   LocalIMessageSyncFilters,
 } from "./types";
+
+import { matchesIMessageFilters, normalizeContactIdentifier } from "./filters";
 
 interface BuildLocalIMessageSyncBatchArgs {
   rows: LocalIMessageRow[];
@@ -21,6 +22,7 @@ function resolveContactName(
   contactLookup: Record<string, string>,
 ): string {
   const normalized = normalizeContactIdentifier(rawContact);
+
   return contactLookup[normalized] ?? contactLookup[rawContact] ?? rawContact;
 }
 
@@ -45,6 +47,7 @@ function appleDateToParts(appleDate: number | null | undefined) {
   }
 
   const isoTimestamp = date.toISOString();
+
   return {
     timestamp: isoTimestamp,
     datePrefix: isoTimestamp.slice(0, 10),
@@ -75,7 +78,9 @@ function buildConversationChunk(
   const last = messages[messages.length - 1]!;
   const contactName = first.metadata.contact;
   const datePrefix = first.metadata.timestamp?.slice(0, 10) ?? "unknown";
-  const participants = [...new Set(messages.map((message) => message.metadata.contact))].sort();
+  const participants = [
+    ...new Set(messages.map((message) => message.metadata.contact)),
+  ].sort();
   const senderRoles = [
     ...new Set(messages.map((message) => message.metadata.senderRole)),
   ].sort();
@@ -116,6 +121,7 @@ function groupMessagesIntoConversations(
   for (const file of files) {
     const conversationId = file.metadata.conversationId;
     const current = groupedByConversation.get(conversationId) ?? [];
+
     current.push(file);
     groupedByConversation.set(conversationId, current);
   }
@@ -124,7 +130,9 @@ function groupMessagesIntoConversations(
 
   for (const [conversationId, messages] of groupedByConversation.entries()) {
     messages.sort((left, right) =>
-      (left.metadata.timestamp ?? "").localeCompare(right.metadata.timestamp ?? ""),
+      (left.metadata.timestamp ?? "").localeCompare(
+        right.metadata.timestamp ?? "",
+      ),
     );
 
     let windowMessages: LocalIMessageFile[] = [];
@@ -139,7 +147,8 @@ function groupMessagesIntoConversations(
         windowMessages.length &&
         timestamp &&
         windowStart &&
-        (timestamp.getTime() - windowStart.getTime()) / 1000 > windowMinutes * 60
+        (timestamp.getTime() - windowStart.getTime()) / 1000 >
+          windowMinutes * 60
       ) {
         grouped.push(buildConversationChunk(conversationId, windowMessages));
         windowMessages = [];
@@ -200,6 +209,7 @@ export function buildLocalIMessageSyncBatch({
     }
 
     const text = row.text?.trim() ? row.text : row.attributedBodyText;
+
     if (!text || text.trim().length < 2) {
       continue;
     }
@@ -207,9 +217,12 @@ export function buildLocalIMessageSyncBatch({
     const canonicalContact = row.contactId ?? "unknown";
     const contactDisplay = row.contactDisplay ?? canonicalContact;
     const contactName = resolveContactName(contactDisplay, normalizedLookup);
-    const { timestamp, datePrefix, timeDisplay } = appleDateToParts(row.appleDate);
+    const { timestamp, datePrefix, timeDisplay } = appleDateToParts(
+      row.appleDate,
+    );
     const senderRole = row.isFromMe ? "self" : "contact";
-    const conversationId = row.threadOriginatorGuid ?? canonicalContact ?? "unknown";
+    const conversationId =
+      row.threadOriginatorGuid ?? canonicalContact ?? "unknown";
     const content = row.isFromMe
       ? `[You → ${contactName}, ${datePrefix} ${timeDisplay}] ${text}`
       : `[${contactName} → You, ${datePrefix} ${timeDisplay}] ${text}`;

@@ -1,7 +1,4 @@
-import type {
-  LocalSourceFilters,
-  QuerySearchRequest,
-} from "../generated";
+import type { LocalSourceFilters, QuerySearchRequest } from "../generated";
 
 export type LocalIMessageSenderRole = "self" | "contact";
 

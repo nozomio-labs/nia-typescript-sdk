@@ -19,7 +19,9 @@ function toLocalSearchFilters(
 
   return {
     contactIds: filters.contact_id ? [filters.contact_id] : undefined,
-    conversationIds: filters.conversation_id ? [filters.conversation_id] : undefined,
+    conversationIds: filters.conversation_id
+      ? [filters.conversation_id]
+      : undefined,
     senderRoles: senderRole ? [senderRole] : undefined,
     timeAfter: filters.time_after,
     timeBefore: filters.time_before,
@@ -42,6 +44,7 @@ function reciprocalRankFusion(
 
       if (existing) {
         existing.fusedScore += fusedScore;
+
         return;
       }
 

@@ -34,6 +34,7 @@ export class E2ESessionManager {
     this.stop();
     this.activeSession = await this.createSessionFn(input);
     this.startPolling();
+
     return this.activeSession;
   }
 
@@ -56,9 +57,11 @@ export class E2ESessionManager {
   async refresh(): Promise<E2ESessionStatus | null> {
     if (!this.activeSession) return null;
     const status = await this.getStatusFn(this.activeSession.sessionId);
+
     if (status.status !== "active") {
       this.stop();
     }
+
     return status;
   }
 

@@ -35,6 +35,10 @@ export function buildLocalStickiesSyncBatch({ rows, cursor, }) {
     return {
         files,
         cursor: { lastSyncTimestamp: maxTs || Math.floor(Date.now() / 1000) },
-        stats: { extracted: files.length, chunks: files.length, dbType: "stickies" },
+        stats: {
+            extracted: files.length,
+            chunks: files.length,
+            dbType: "stickies",
+        },
     };
 }

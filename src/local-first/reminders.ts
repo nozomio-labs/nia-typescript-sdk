@@ -51,6 +51,7 @@ function cocoaToIso(ts: number | null | undefined): string | null {
   if (!ts) return null;
   const ms = (ts + 978307200) * 1000;
   const d = new Date(ms);
+
   return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
 
@@ -72,15 +73,18 @@ export function buildLocalRemindersSyncBatch({
     if (row.modifiedAt) maxTs = Math.max(maxTs, row.modifiedAt);
 
     const title = row.title?.trim();
+
     if (!title) continue;
 
     const list = row.listName ?? "Reminders";
     const lines = [`Reminder: ${title}`];
+
     lines.push(`List: ${list}`);
     lines.push(`Status: ${row.isCompleted ? "Completed" : "Pending"}`);
     if (row.notes?.trim()) lines.push(`Notes: ${row.notes.trim()}`);
     if (row.dueDate) lines.push(`Due: ${cocoaToIso(row.dueDate) ?? "Unknown"}`);
-    if (row.priority && row.priority > 0) lines.push(`Priority: ${row.priority}`);
+    if (row.priority && row.priority > 0)
+      lines.push(`Priority: ${row.priority}`);
 
     const modified = cocoaToIso(row.modifiedAt);
 
@@ -104,6 +108,10 @@ export function buildLocalRemindersSyncBatch({
   return {
     files,
     cursor: { lastSyncTimestamp: maxTs || Math.floor(Date.now() / 1000) },
-    stats: { extracted: files.length, chunks: files.length, dbType: "reminders" },
+    stats: {
+      extracted: files.length,
+      chunks: files.length,
+      dbType: "reminders",
+    },
   };
 }

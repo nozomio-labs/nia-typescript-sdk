@@ -57,6 +57,7 @@ export function buildLocalScreenshotsSyncBatch({
 
   for (const row of rows) {
     const capturedTs = row.capturedAt ?? 0;
+
     maxTs = Math.max(maxTs, capturedTs);
 
     if (capturedTs <= norm.lastCaptureTimestamp) continue;
@@ -90,6 +91,10 @@ export function buildLocalScreenshotsSyncBatch({
   return {
     files,
     cursor: { lastCaptureTimestamp: maxTs },
-    stats: { extracted: files.length, chunks: files.length, dbType: "screenshots" },
+    stats: {
+      extracted: files.length,
+      chunks: files.length,
+      dbType: "screenshots",
+    },
   };
 }

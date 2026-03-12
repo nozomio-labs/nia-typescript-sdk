@@ -41,7 +41,9 @@ function buildConversationChunk(conversationId, messages) {
     const last = messages[messages.length - 1];
     const contactName = first.metadata.contact;
     const datePrefix = first.metadata.timestamp?.slice(0, 10) ?? "unknown";
-    const participants = [...new Set(messages.map((message) => message.metadata.contact))].sort();
+    const participants = [
+        ...new Set(messages.map((message) => message.metadata.contact)),
+    ].sort();
     const senderRoles = [
         ...new Set(messages.map((message) => message.metadata.senderRole)),
     ].sort();
@@ -91,7 +93,8 @@ function groupMessagesIntoConversations(files, windowMinutes) {
             if (windowMessages.length &&
                 timestamp &&
                 windowStart &&
-                (timestamp.getTime() - windowStart.getTime()) / 1000 > windowMinutes * 60) {
+                (timestamp.getTime() - windowStart.getTime()) / 1000 >
+                    windowMinutes * 60) {
                 grouped.push(buildConversationChunk(conversationId, windowMessages));
                 windowMessages = [];
                 windowStart = null;

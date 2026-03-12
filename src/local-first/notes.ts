@@ -52,6 +52,7 @@ function cocoaToIso(ts: number | null | undefined): string | null {
   if (!ts) return null;
   const ms = (ts + 978307200) * 1000;
   const d = new Date(ms);
+
   return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
 
@@ -81,6 +82,7 @@ export function buildLocalNotesSyncBatch({
 
     const title = row.title?.trim() || "Untitled";
     const body = row.body?.trim();
+
     if (!body || body.length < 2) continue;
 
     const folder = row.folderName ?? "Notes";

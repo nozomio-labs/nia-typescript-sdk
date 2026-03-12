@@ -65,12 +65,15 @@ export function buildLocalContactsSyncBatch({
     const first = row.firstName?.trim() ?? "";
     const last = row.lastName?.trim() ?? "";
     const org = row.organization?.trim() ?? "";
-    const fullName = [first, last].filter(Boolean).join(" ") || org || "Unknown";
+    const fullName =
+      [first, last].filter(Boolean).join(" ") || org || "Unknown";
 
     const lines = [`Name: ${fullName}`];
+
     if (org) lines.push(`Organization: ${org}`);
     if (row.emails?.length) lines.push(`Emails: ${row.emails.join(", ")}`);
-    if (row.phoneNumbers?.length) lines.push(`Phones: ${row.phoneNumbers.join(", ")}`);
+    if (row.phoneNumbers?.length)
+      lines.push(`Phones: ${row.phoneNumbers.join(", ")}`);
 
     files.push({
       path: `contacts/${sanitize(fullName)}_${row.contactId}.txt`,
@@ -92,6 +95,10 @@ export function buildLocalContactsSyncBatch({
   return {
     files,
     cursor: { lastSyncTimestamp: maxTs || Math.floor(Date.now() / 1000) },
-    stats: { extracted: files.length, chunks: files.length, dbType: "contacts" },
+    stats: {
+      extracted: files.length,
+      chunks: files.length,
+      dbType: "contacts",
+    },
   };
 }

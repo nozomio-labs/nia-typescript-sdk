@@ -8,11 +8,9 @@
 
 import type { E2ESyncChunk } from "../daemon-types";
 import type { LocalEmbeddingProvider } from "./types";
+
 import { encryptToBase64 } from "./encryption";
-import {
-  generateBlindIndexTokens,
-  hashIdentifier,
-} from "./blind-index";
+import { generateBlindIndexTokens, hashIdentifier } from "./blind-index";
 import {
   DEFAULT_EMBEDDING_PROFILE,
   type EmbeddingProfile,
@@ -71,6 +69,7 @@ export async function buildE2ESyncBatch({
       blindIndexKey,
       maxBlindIndexTokens,
     );
+
     totalTokens += blindTokens.length;
 
     const contactHash = chunk.contactId
@@ -82,6 +81,7 @@ export async function buildE2ESyncBatch({
       : null;
 
     let metadataCiphertext: string | null = null;
+
     if (chunk.metadata && Object.keys(chunk.metadata).length > 0) {
       metadataCiphertext = await encryptToBase64(
         JSON.stringify(chunk.metadata),

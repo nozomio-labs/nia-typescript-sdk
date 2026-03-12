@@ -46,6 +46,10 @@ export function buildLocalContactsSyncBatch({ rows, cursor, }) {
     return {
         files,
         cursor: { lastSyncTimestamp: maxTs || Math.floor(Date.now() / 1000) },
-        stats: { extracted: files.length, chunks: files.length, dbType: "contacts" },
+        stats: {
+            extracted: files.length,
+            chunks: files.length,
+            dbType: "contacts",
+        },
     };
 }

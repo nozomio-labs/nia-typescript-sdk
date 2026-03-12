@@ -74,7 +74,6 @@ export interface ReportDaemonErrorInput {
 
 export type DaemonSimpleResponse = Record<string, unknown>;
 
-
 // =============================================================================
 // E2E Client-Indexed Types
 // =============================================================================

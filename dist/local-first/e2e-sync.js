@@ -6,7 +6,7 @@
  * ready for `DaemonClient.pushE2ESync()`.
  */
 import { encryptToBase64 } from "./encryption";
-import { generateBlindIndexTokens, hashIdentifier, } from "./blind-index";
+import { generateBlindIndexTokens, hashIdentifier } from "./blind-index";
 import { DEFAULT_EMBEDDING_PROFILE, } from "./embedding-profile";
 export async function buildE2ESyncBatch({ chunks, encryptionKey, blindIndexKey, embedder, profile = DEFAULT_EMBEDDING_PROFILE, maxBlindIndexTokens = 64, }) {
     const texts = chunks.map((c) => c.content);

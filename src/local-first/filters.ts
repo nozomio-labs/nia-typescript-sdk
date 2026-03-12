@@ -4,7 +4,11 @@ import type {
   LocalSearchFilters,
 } from "./types";
 
-type FilterShape = LocalSearchFilters | LocalIMessageSyncFilters | undefined | null;
+type FilterShape =
+  | LocalSearchFilters
+  | LocalIMessageSyncFilters
+  | undefined
+  | null;
 
 function isSyncFilterShape(
   filters: FilterShape,
@@ -15,14 +19,17 @@ function isSyncFilterShape(
 function toIsoString(value: Date | string | null | undefined): string | null {
   if (!value) return null;
   if (value instanceof Date) return value.toISOString();
+
   return value;
 }
 
 function toDate(value: string | null | undefined): Date | null {
   if (!value) return null;
-  const normalizedValue =
-    /(?:Z|[+-]\d{2}:\d{2})$/.test(value) ? value : `${value}Z`;
+  const normalizedValue = /(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+    ? value
+    : `${value}Z`;
   const parsed = new Date(normalizedValue);
+
   return Number.isNaN(parsed.getTime()) ? null : parsed;
 }
 
@@ -37,6 +44,7 @@ export function normalizeContactIdentifier(
   }
 
   const digitsOnly = trimmed.replace(/\D/g, "");
+
   return digitsOnly || trimmed.toLowerCase();
 }
 
@@ -57,6 +65,7 @@ function includesExactValue(
   allowedValues: string[] | null | undefined,
 ): boolean {
   if (!allowedValues?.length) return true;
+
   return allowedValues.includes(candidate ?? "");
 }
 
@@ -66,7 +75,9 @@ export function resolveEffectiveTimeAfter(
 ): string | null {
   const explicitAfter = toIsoString(filters?.timeAfter ?? null);
   const explicitAfterDate = toDate(explicitAfter);
-  const backfillDays = isSyncFilterShape(filters) ? filters.backfillDays : undefined;
+  const backfillDays = isSyncFilterShape(filters)
+    ? filters.backfillDays
+    : undefined;
 
   if (!backfillDays || backfillDays <= 0) {
     return explicitAfter;
@@ -106,11 +117,17 @@ export function matchesIMessageFilters(
     return false;
   }
 
-  if (filters.sourceSubtype && metadata.sourceSubtype !== filters.sourceSubtype) {
+  if (
+    filters.sourceSubtype &&
+    metadata.sourceSubtype !== filters.sourceSubtype
+  ) {
     return false;
   }
 
-  if (filters.connectorType && metadata.connectorType !== filters.connectorType) {
+  if (
+    filters.connectorType &&
+    metadata.connectorType !== filters.connectorType
+  ) {
     return false;
   }
 
@@ -125,6 +142,7 @@ export function matchesIMessageFilters(
   const senderRoles = metadata.senderRoles?.length
     ? metadata.senderRoles
     : [metadata.senderRole];
+
   if (
     filters.senderRoles?.length &&
     !filters.senderRoles.some((role) => senderRoles.includes(role))

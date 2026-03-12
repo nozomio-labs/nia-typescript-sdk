@@ -1,9 +1,3 @@
-import {
-  DefaultService,
-  OpenAPI,
-  V2ApiSearchService,
-  V2ApiSourcesService,
-} from "./generated";
 import type {
   CreateDaemonSourceInput,
   CreateDaemonSourceResult,
@@ -18,12 +12,18 @@ import type {
   E2EDecryptResult,
   E2ESession,
   E2ESessionStatus,
-  E2ESyncChunk,
   E2ESyncResult,
   PushDaemonSyncInput,
   PushE2ESyncInput,
   ReportDaemonErrorInput,
 } from "./daemon-types";
+
+import {
+  DefaultService,
+  OpenAPI,
+  V2ApiSearchService,
+  V2ApiSourcesService,
+} from "./generated";
 import { NiaTimeoutError } from "./errors";
 import { RetryConfig, withRetries } from "./retry";
 
@@ -46,11 +46,13 @@ function removeUndefined<T extends Record<string, unknown>>(value: T): T {
 function toOptionalString(value: unknown): string | null | undefined {
   if (value === undefined) return undefined;
   if (value === null) return null;
+
   return typeof value === "string" ? value : String(value);
 }
 
 function toStringArray(value: unknown): string[] | undefined {
   if (!Array.isArray(value)) return undefined;
+
   return value.map((entry) => String(entry));
 }
 
@@ -90,7 +92,9 @@ function fromDaemonSyncFiltersPayload(
   });
 }
 
-function toDaemonSyncFilePayload(file: DaemonSyncFile): Record<string, unknown> {
+function toDaemonSyncFilePayload(
+  file: DaemonSyncFile,
+): Record<string, unknown> {
   return {
     path: file.path,
     content: file.content ?? "",
@@ -163,7 +167,11 @@ function parseDaemonResponse(text: string): unknown {
   }
 }
 
-function formatDaemonError(status: number, statusText: string, payload: unknown): Error {
+function formatDaemonError(
+  status: number,
+  statusText: string,
+  payload: unknown,
+): Error {
   if (isRecord(payload) && payload.detail !== undefined)
     return new Error(
       `Daemon request failed (${status}): ${String(payload.detail)}`,
@@ -324,8 +332,7 @@ export class DaemonClient {
             Authorization: `Bearer ${this.apiKey}`,
             "Content-Type": "application/json",
           },
-          body:
-            init.body === undefined ? undefined : JSON.stringify(init.body),
+          body: init.body === undefined ? undefined : JSON.stringify(init.body),
         },
       );
       const payload = parseDaemonResponse(await response.text());
@@ -366,6 +373,7 @@ export class DaemonClient {
     });
 
     if (!Array.isArray(payload)) return [];
+
     return payload.map((source) => fromDaemonSourcePayload(source));
   }
 
@@ -472,8 +480,7 @@ export class DaemonClient {
       status: String(payload.status ?? ""),
       chunksStored:
         typeof payload.chunks_stored === "number" ? payload.chunks_stored : 0,
-      message:
-        typeof payload.message === "string" ? payload.message : null,
+      message: typeof payload.message === "string" ? payload.message : null,
       idempotencyKey:
         typeof payload.idempotency_key === "string"
           ? payload.idempotency_key
@@ -481,9 +488,7 @@ export class DaemonClient {
     };
   }
 
-  async createE2ESession(
-    input: CreateE2ESessionInput,
-  ): Promise<E2ESession> {
+  async createE2ESession(input: CreateE2ESessionInput): Promise<E2ESession> {
     const payload = await this.request<Record<string, unknown>>(
       "/daemon/e2e/sessions",
       {

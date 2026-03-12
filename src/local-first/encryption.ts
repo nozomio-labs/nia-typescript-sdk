@@ -25,27 +25,36 @@ function getSubtle(): SubtleCrypto {
 
 function randomBytes(length: number): Uint8Array {
   const buf = new Uint8Array(length);
+
   globalThis.crypto.getRandomValues(buf);
+
   return buf;
 }
 
 function toBase64(buf: ArrayBuffer | Uint8Array): string {
   const bytes = buf instanceof Uint8Array ? buf : new Uint8Array(buf);
   let binary = "";
-  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]!);
+
+  for (let i = 0; i < bytes.length; i++)
+    binary += String.fromCharCode(bytes[i]!);
+
   return btoa(binary);
 }
 
 function fromBase64(str: string): Uint8Array {
   const binary = atob(str);
   const bytes = new Uint8Array(binary.length);
+
   for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+
   return bytes;
 }
 
 function asBuffer(arr: Uint8Array): ArrayBuffer {
   const buf = new ArrayBuffer(arr.byteLength);
+
   new Uint8Array(buf).set(arr);
+
   return buf;
 }
 
@@ -85,6 +94,7 @@ export async function importRawKey(
   rawKeyBytes: Uint8Array,
 ): Promise<CryptoKey> {
   const subtle = getSubtle();
+
   return subtle.importKey(
     "raw",
     asBuffer(rawKeyBytes),
@@ -137,6 +147,7 @@ export async function encryptToBase64(
 ): Promise<string> {
   const envelope = await encryptContent(plaintext, key);
   const combined = JSON.stringify({ c: envelope.ciphertext, v: envelope.iv });
+
   return toBase64(new TextEncoder().encode(combined));
 }
 
@@ -146,6 +157,7 @@ export async function decryptFromBase64(
 ): Promise<string> {
   const json = new TextDecoder().decode(fromBase64(encoded));
   const { c, v } = JSON.parse(json) as { c: string; v: string };
+
   return decryptContent({ ciphertext: c, iv: v }, key);
 }
 

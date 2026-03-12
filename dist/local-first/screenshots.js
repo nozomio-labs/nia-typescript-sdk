@@ -41,6 +41,10 @@ export function buildLocalScreenshotsSyncBatch({ rows, cursor, }) {
     return {
         files,
         cursor: { lastCaptureTimestamp: maxTs },
-        stats: { extracted: files.length, chunks: files.length, dbType: "screenshots" },
+        stats: {
+            extracted: files.length,
+            chunks: files.length,
+            dbType: "screenshots",
+        },
     };
 }

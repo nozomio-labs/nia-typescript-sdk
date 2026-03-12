@@ -1,4 +1,3 @@
-import { buildLocalIMessageSyncBatch } from "./imessage";
 import type {
   LocalEmbeddingProvider,
   LocalIMessageCursor,
@@ -9,6 +8,8 @@ import type {
   LocalVectorStore,
   LocalVectorStoreRecord,
 } from "./types";
+
+import { buildLocalIMessageSyncBatch } from "./imessage";
 
 interface IndexLocalIMessageBatchArgs {
   rows: LocalIMessageRow[];

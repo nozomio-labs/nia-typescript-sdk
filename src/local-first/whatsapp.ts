@@ -6,8 +6,9 @@
  * a sync batch ready for `DaemonClient.pushSync()` or E2E upload.
  */
 
-import { matchesIMessageFilters, normalizeContactIdentifier } from "./filters";
 import type { LocalIMessageSyncFilters } from "./types";
+
+import { matchesIMessageFilters, normalizeContactIdentifier } from "./filters";
 
 export interface LocalWhatsAppRow {
   messageId: number;
@@ -85,11 +86,9 @@ function sanitize(name: string): string {
   return name.replace(/[^\w\-_]/g, "_").slice(0, 50) || "unknown";
 }
 
-function resolveContact(
-  raw: string,
-  lookup: Record<string, string>,
-): string {
+function resolveContact(raw: string, lookup: Record<string, string>): string {
   const norm = normalizeContactIdentifier(raw);
+
   return lookup[norm] ?? lookup[raw] ?? raw;
 }
 
@@ -97,6 +96,7 @@ function tsToIso(ts: number | null | undefined): string | null {
   if (!ts) return null;
   const ms = ts > 1e12 ? ts : ts * 1000;
   const d = new Date(ms);
+
   return Number.isNaN(d.getTime()) ? null : d.toISOString();
 }
 
@@ -110,7 +110,9 @@ function buildConversationChunk(
   const last = messages[messages.length - 1]!;
   const chatName = first.metadata.chatName;
   const datePrefix = first.metadata.timestamp?.slice(0, 10) ?? "unknown";
-  const participants = [...new Set(messages.map((m) => m.metadata.contact))].sort();
+  const participants = [
+    ...new Set(messages.map((m) => m.metadata.contact)),
+  ].sort();
 
   const transcript = [
     `[WhatsApp chat: ${chatName}, ${datePrefix}]`,
@@ -139,14 +141,17 @@ function groupIntoConversations(
   windowMinutes: number,
 ): LocalWhatsAppFile[] {
   const groups = new Map<string, LocalWhatsAppFile[]>();
+
   for (const f of files) {
     const key = f.metadata.chatId;
     const arr = groups.get(key) ?? [];
+
     arr.push(f);
     groups.set(key, arr);
   }
 
   const result: LocalWhatsAppFile[] = [];
+
   for (const [chatId, msgs] of groups.entries()) {
     msgs.sort((a, b) =>
       (a.metadata.timestamp ?? "").localeCompare(b.metadata.timestamp ?? ""),
@@ -156,7 +161,10 @@ function groupIntoConversations(
     let windowStart: Date | null = null;
 
     for (const msg of msgs) {
-      const ts = msg.metadata.timestamp ? new Date(msg.metadata.timestamp) : null;
+      const ts = msg.metadata.timestamp
+        ? new Date(msg.metadata.timestamp)
+        : null;
+
       if (
         window.length &&
         ts &&
@@ -169,11 +177,13 @@ function groupIntoConversations(
       }
       window.push(msg);
       if (ts && !Number.isNaN(ts.getTime())) {
-        if (!windowStart || ts.getTime() < windowStart.getTime()) windowStart = ts;
+        if (!windowStart || ts.getTime() < windowStart.getTime())
+          windowStart = ts;
       }
     }
     if (window.length) result.push(buildConversationChunk(chatId, window));
   }
+
   return result;
 }
 
@@ -209,6 +219,7 @@ export function buildLocalWhatsAppSyncBatch({
     if (row.messageId <= normalizedCursor.lastMessageId) continue;
 
     const text = row.text?.trim();
+
     if (!text || text.length < 2) continue;
 
     const canonicalContact = row.senderPhone ?? row.senderName ?? "unknown";
@@ -220,7 +231,7 @@ export function buildLocalWhatsAppSyncBatch({
     const chatName = row.chatName ?? chatId;
     const timestamp = tsToIso(row.timestamp);
     const datePrefix = timestamp?.slice(0, 10) ?? "unknown";
-    const senderRole = row.isFromMe ? "self" as const : "contact" as const;
+    const senderRole = row.isFromMe ? ("self" as const) : ("contact" as const);
 
     const content = row.isFromMe
       ? `[You → ${chatName}, ${datePrefix}] ${text}`
@@ -261,6 +272,7 @@ export function buildLocalWhatsAppSyncBatch({
         ...file.metadata,
         rowId: row.messageId,
       } as unknown as Parameters<typeof matchesIMessageFilters>[0];
+
       if (!matchesIMessageFilters(filterMeta, filters, new Date())) continue;
     }
 
@@ -272,6 +284,10 @@ export function buildLocalWhatsAppSyncBatch({
   return {
     files: grouped,
     cursor: { lastMessageId: maxId, lastTimestamp: maxTs },
-    stats: { extracted: files.length, chunks: grouped.length, dbType: "whatsapp" },
+    stats: {
+      extracted: files.length,
+      chunks: grouped.length,
+      dbType: "whatsapp",
+    },
   };
 }

@@ -27,7 +27,9 @@ function buildConversationChunk(chatId, messages) {
     const last = messages[messages.length - 1];
     const chatName = first.metadata.chatName;
     const datePrefix = first.metadata.timestamp?.slice(0, 10) ?? "unknown";
-    const participants = [...new Set(messages.map((m) => m.metadata.contact))].sort();
+    const participants = [
+        ...new Set(messages.map((m) => m.metadata.contact)),
+    ].sort();
     const transcript = [
         `[WhatsApp chat: ${chatName}, ${datePrefix}]`,
         "",
@@ -62,7 +64,9 @@ function groupIntoConversations(files, windowMinutes) {
         let window = [];
         let windowStart = null;
         for (const msg of msgs) {
-            const ts = msg.metadata.timestamp ? new Date(msg.metadata.timestamp) : null;
+            const ts = msg.metadata.timestamp
+                ? new Date(msg.metadata.timestamp)
+                : null;
             if (window.length &&
                 ts &&
                 windowStart &&
@@ -157,6 +161,10 @@ export function buildLocalWhatsAppSyncBatch({ rows, cursor, filters, contactLook
     return {
         files: grouped,
         cursor: { lastMessageId: maxId, lastTimestamp: maxTs },
-        stats: { extracted: files.length, chunks: grouped.length, dbType: "whatsapp" },
+        stats: {
+            extracted: files.length,
+            chunks: grouped.length,
+            dbType: "whatsapp",
+        },
     };
 }

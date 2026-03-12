@@ -1,10 +1,11 @@
-import { matchesIMessageFilters } from "./filters";
 import type {
   LocalSearchFilters,
   LocalSearchHit,
   LocalVectorStore,
   LocalVectorStoreRecord,
 } from "./types";
+
+import { matchesIMessageFilters } from "./filters";
 
 function cosineSimilarity(left: number[], right: number[]): number {
   const size = Math.min(left.length, right.length);
@@ -22,6 +23,7 @@ function cosineSimilarity(left: number[], right: number[]): number {
   }
 
   if (!leftNorm || !rightNorm) return 0;
+
   return dot / (Math.sqrt(leftNorm) * Math.sqrt(rightNorm));
 }
 
@@ -54,9 +56,7 @@ export class MemoryLocalVectorStore implements LocalVectorStore {
     filters?: LocalSearchFilters;
   }) {
     const hits = [...this.records.values()]
-      .filter((record) =>
-        matchesIMessageFilters(record.metadata, args.filters),
-      )
+      .filter((record) => matchesIMessageFilters(record.metadata, args.filters))
       .map((record) =>
         toSearchHit(record, cosineSimilarity(args.embedding, record.embedding)),
       )
