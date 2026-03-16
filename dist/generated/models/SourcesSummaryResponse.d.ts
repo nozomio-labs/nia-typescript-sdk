@@ -7,4 +7,5 @@ export type SourcesSummaryResponse = {
     local_folders: SourceTypeSummary;
     slack: SourceTypeSummary;
     google_drive: SourceTypeSummary;
+    'x': SourceTypeSummary;
 };

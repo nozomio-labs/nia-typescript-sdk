@@ -72,6 +72,7 @@ export type { routes__v2__google_drive__GoogleDriveIndexRequest } from './models
 export type { routes__v2__google_drive__GoogleDriveSelectionRequest } from './models/routes__v2__google_drive__GoogleDriveSelectionRequest';
 export type { routes__v2__google_drive__GoogleDriveSyncRequest } from './models/routes__v2__google_drive__GoogleDriveSyncRequest';
 export type { routes__v2__slack__SlackChannelsConfigRequest } from './models/routes__v2__slack__SlackChannelsConfigRequest';
+export type { routes__v2__x__XInstallationRequest } from './models/routes__v2__x__XInstallationRequest';
 export type { SearchQuery_Output } from './models/SearchQuery_Output';
 export type { SearchScope } from './models/SearchScope';
 export type { SignupRequest } from './models/SignupRequest';
@@ -123,3 +124,4 @@ export { V2ApiPackageSearchService } from './services/V2ApiPackageSearchService'
 export { V2ApiSearchService } from './services/V2ApiSearchService';
 export { V2ApiSlackService } from './services/V2ApiSlackService';
 export { V2ApiSourcesService } from './services/V2ApiSourcesService';
+export { V2ApiXService } from './services/V2ApiXService';

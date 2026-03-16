@@ -39,6 +39,7 @@ import type { routes__v2__google_drive__GoogleDriveIndexRequest } from '../model
 import type { routes__v2__google_drive__GoogleDriveSelectionRequest } from '../models/routes__v2__google_drive__GoogleDriveSelectionRequest';
 import type { routes__v2__google_drive__GoogleDriveSyncRequest } from '../models/routes__v2__google_drive__GoogleDriveSyncRequest';
 import type { routes__v2__slack__SlackChannelsConfigRequest } from '../models/routes__v2__slack__SlackChannelsConfigRequest';
+import type { routes__v2__x__XInstallationRequest } from '../models/routes__v2__x__XInstallationRequest';
 import type { SignupRequest } from '../models/SignupRequest';
 import type { SignupResponse } from '../models/SignupResponse';
 import type { SlackGrepRequest } from '../models/SlackGrepRequest';
@@ -741,4 +742,45 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static getUsageSummaryV2V2UsageGet(): CancelablePromise<UsageSummaryResponse>;
+    /**
+     * List X Installations
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listXInstallationsV2XInstallationsGet(): CancelablePromise<any>;
+    /**
+     * Create X Installation
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static createXInstallationV2XInstallationsPost(requestBody: routes__v2__x__XInstallationRequest): CancelablePromise<any>;
+    /**
+     * Get X Installation
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getXInstallationV2XInstallationsInstallationIdGet(installationId: string): CancelablePromise<any>;
+    /**
+     * Delete X Installation
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static deleteXInstallationV2XInstallationsInstallationIdDelete(installationId: string): CancelablePromise<any>;
+    /**
+     * Trigger X Index
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static triggerXIndexV2XInstallationsInstallationIdIndexPost(installationId: string): CancelablePromise<any>;
+    /**
+     * Get X Index Status
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getXIndexStatusV2XInstallationsInstallationIdStatusGet(installationId: string): CancelablePromise<any>;
 }
