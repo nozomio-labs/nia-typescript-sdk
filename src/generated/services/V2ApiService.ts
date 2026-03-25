@@ -23,6 +23,11 @@ import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestW
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
+import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
+import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
+import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
+import type { ExtractRequest } from '../models/ExtractRequest';
+import type { ExtractResponse } from '../models/ExtractResponse';
 import type { GitHubGlobRequest } from '../models/GitHubGlobRequest';
 import type { GitHubReadRequest } from '../models/GitHubReadRequest';
 import type { GitHubSearchRequest } from '../models/GitHubSearchRequest';
@@ -272,6 +277,164 @@ export class V2ApiService {
         });
     }
     /**
+     * List Available Connectors
+     * List all available connector types with their metadata.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static listAvailableConnectorsV2ConnectorsGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/connectors',
+        });
+    }
+    /**
+     * List Installations
+     * List all connector installations for the current user/org.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static listInstallationsV2ConnectorsInstallationsGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/connectors/installations',
+        });
+    }
+    /**
+     * Delete Installation
+     * Disconnect a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static deleteInstallationV2ConnectorsInstallationsInstallationIdDelete(
+        installationId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/connectors/installations/{installation_id}',
+            path: {
+                'installation_id': installationId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Index Installation
+     * Trigger indexing for a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static indexInstallationV2ConnectorsInstallationsInstallationIdIndexPost(
+        installationId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/connectors/installations/{installation_id}/index',
+            path: {
+                'installation_id': installationId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Update Schedule
+     * Update sync schedule for a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static updateScheduleV2ConnectorsInstallationsInstallationIdSchedulePatch(
+        installationId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/connectors/installations/{installation_id}/schedule',
+            path: {
+                'installation_id': installationId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Installation Status
+     * Get sync status and health for a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static getInstallationStatusV2ConnectorsInstallationsInstallationIdStatusGet(
+        installationId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/connectors/installations/{installation_id}/status',
+            path: {
+                'installation_id': installationId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Install Connector
+     * Install a connector — either store API key or initiate OAuth flow.
+     * @param connectorType
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static installConnectorV2ConnectorsConnectorTypeInstallPost(
+        connectorType: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/connectors/{connector_type}/install',
+            path: {
+                'connector_type': connectorType,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Oauth Callback
+     * Handle OAuth callback — exchange code, create installation, redirect to frontend.
+     * @param connectorType
+     * @param code
+     * @param state
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static oauthCallbackV2ConnectorsConnectorTypeOauthCallbackGet(
+        connectorType: string,
+        code: string,
+        state: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/connectors/{connector_type}/oauth/callback',
+            path: {
+                'connector_type': connectorType,
+            },
+            query: {
+                'code': code,
+                'state': state,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Save context
      * Save conversation context for cross-agent sharing. Indexed in vector store for semantic search.
      * @param requestBody
@@ -506,6 +669,134 @@ export class V2ApiService {
             url: '/dependencies/upload',
             formData: formData,
             mediaType: 'multipart/form-data',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Start Extraction
+     * @param requestBody
+     * @returns ExtractResponse Successful Response
+     * @throws ApiError
+     */
+    public static startExtractionV2ExtractPost(
+        requestBody: ExtractRequest,
+    ): CancelablePromise<ExtractResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/extract',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Start Engineering Extraction
+     * @param requestBody
+     * @returns EngineeringExtractResponse Successful Response
+     * @throws ApiError
+     */
+    public static startEngineeringExtractionV2ExtractEngineeringPost(
+        requestBody: EngineeringExtractRequest,
+    ): CancelablePromise<EngineeringExtractResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/extract/engineering',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Engineering Extraction
+     * @param extractionId
+     * @returns EngineeringExtractResponse Successful Response
+     * @throws ApiError
+     */
+    public static getEngineeringExtractionV2ExtractEngineeringExtractionIdGet(
+        extractionId: string,
+    ): CancelablePromise<EngineeringExtractResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/extract/engineering/{extraction_id}',
+            path: {
+                'extraction_id': extractionId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Query Engineering Extraction
+     * @param extractionId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static queryEngineeringExtractionV2ExtractEngineeringExtractionIdQueryPost(
+        extractionId: string,
+        requestBody: EngineeringQueryRequest,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/extract/engineering/{extraction_id}/query',
+            path: {
+                'extraction_id': extractionId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Extraction
+     * @param extractionId
+     * @returns ExtractResponse Successful Response
+     * @throws ApiError
+     */
+    public static getExtractionV2ExtractExtractionIdGet(
+        extractionId: string,
+    ): CancelablePromise<ExtractResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/extract/{extraction_id}',
+            path: {
+                'extraction_id': extractionId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * List Extractions
+     * @param type Filter by type: table or engineering
+     * @param limit
+     * @param offset
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static listExtractionsV2ExtractionsGet(
+        type?: (string | null),
+        limit: number = 30,
+        offset?: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/extractions',
+            query: {
+                'type': type,
+                'limit': limit,
+                'offset': offset,
+            },
             errors: {
                 422: `Validation Error`,
             },
@@ -1311,7 +1602,7 @@ export class V2ApiService {
      * @throws ApiError
      */
     public static listSourcesV2SourcesGet(
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
         query?: (string | null),
         status?: (string | null),
         categoryId?: (string | null),
@@ -1374,7 +1665,7 @@ export class V2ApiService {
      */
     public static resolveSourceV2SourcesResolveGet(
         identifier: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceResolveResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1437,7 +1728,7 @@ export class V2ApiService {
      */
     public static getSourceV2SourcesSourceIdGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1464,7 +1755,7 @@ export class V2ApiService {
     public static updateSourceV2SourcesSourceIdPatch(
         sourceId: string,
         requestBody: SourceUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -1491,7 +1782,7 @@ export class V2ApiService {
      */
     public static deleteSourceV2SourcesSourceIdDelete(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceDeleteResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -1516,7 +1807,7 @@ export class V2ApiService {
      */
     public static listSourceAnnotationsV2SourcesSourceIdAnnotationsGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<Array<SourceAnnotation>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1543,7 +1834,7 @@ export class V2ApiService {
     public static createSourceAnnotationV2SourcesSourceIdAnnotationsPost(
         sourceId: string,
         requestBody: SourceAnnotationCreateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -1574,7 +1865,7 @@ export class V2ApiService {
         sourceId: string,
         annotationId: string,
         requestBody: SourceAnnotationUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -1604,7 +1895,7 @@ export class V2ApiService {
     public static deleteSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdDelete(
         sourceId: string,
         annotationId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -1630,7 +1921,7 @@ export class V2ApiService {
      */
     public static getSourceClassificationV2SourcesSourceIdClassificationGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1657,7 +1948,7 @@ export class V2ApiService {
     public static updateSourceClassificationV2SourcesSourceIdClassificationPatch(
         sourceId: string,
         requestBody: ClassifyLocalFolderRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -1692,7 +1983,7 @@ export class V2ApiService {
      */
     public static getSourceContentV2SourcesSourceIdContentGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
         path?: (string | null),
         url?: (string | null),
         branch?: (string | null),
@@ -1733,7 +2024,7 @@ export class V2ApiService {
      */
     public static getSourceCurationV2SourcesSourceIdCurationGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -1760,7 +2051,7 @@ export class V2ApiService {
     public static updateSourceCurationV2SourcesSourceIdCurationPut(
         sourceId: string,
         requestBody: SourceCurationUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -1789,7 +2080,7 @@ export class V2ApiService {
     public static grepSourceV2SourcesSourceIdGrepPost(
         sourceId: string,
         requestBody: Record<string, any>,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -1818,7 +2109,7 @@ export class V2ApiService {
     public static syncSourceV2SourcesSourceIdSyncPost(
         sourceId: string,
         requestBody: Record<string, any>,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -1847,7 +2138,7 @@ export class V2ApiService {
      */
     public static getSourceTreeV2SourcesSourceIdTreeGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
         branch?: (string | null),
         maxDepth: number = 10,
     ): CancelablePromise<any> {

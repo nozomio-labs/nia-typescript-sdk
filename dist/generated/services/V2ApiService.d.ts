@@ -19,6 +19,11 @@ import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestW
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
+import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
+import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
+import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
+import type { ExtractRequest } from '../models/ExtractRequest';
+import type { ExtractResponse } from '../models/ExtractResponse';
 import type { GitHubGlobRequest } from '../models/GitHubGlobRequest';
 import type { GitHubReadRequest } from '../models/GitHubReadRequest';
 import type { GitHubSearchRequest } from '../models/GitHubSearchRequest';
@@ -150,6 +155,70 @@ export declare class V2ApiService {
      */
     static deleteCategoryV2CategoriesCategoryIdDelete(categoryId: string): CancelablePromise<any>;
     /**
+     * List Available Connectors
+     * List all available connector types with their metadata.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listAvailableConnectorsV2ConnectorsGet(): CancelablePromise<any>;
+    /**
+     * List Installations
+     * List all connector installations for the current user/org.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listInstallationsV2ConnectorsInstallationsGet(): CancelablePromise<any>;
+    /**
+     * Delete Installation
+     * Disconnect a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static deleteInstallationV2ConnectorsInstallationsInstallationIdDelete(installationId: string): CancelablePromise<any>;
+    /**
+     * Index Installation
+     * Trigger indexing for a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static indexInstallationV2ConnectorsInstallationsInstallationIdIndexPost(installationId: string): CancelablePromise<any>;
+    /**
+     * Update Schedule
+     * Update sync schedule for a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static updateScheduleV2ConnectorsInstallationsInstallationIdSchedulePatch(installationId: string): CancelablePromise<any>;
+    /**
+     * Get Installation Status
+     * Get sync status and health for a connector installation.
+     * @param installationId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getInstallationStatusV2ConnectorsInstallationsInstallationIdStatusGet(installationId: string): CancelablePromise<any>;
+    /**
+     * Install Connector
+     * Install a connector — either store API key or initiate OAuth flow.
+     * @param connectorType
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static installConnectorV2ConnectorsConnectorTypeInstallPost(connectorType: string): CancelablePromise<any>;
+    /**
+     * Oauth Callback
+     * Handle OAuth callback — exchange code, create installation, redirect to frontend.
+     * @param connectorType
+     * @param code
+     * @param state
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static oauthCallbackV2ConnectorsConnectorTypeOauthCallbackGet(connectorType: string, code: string, state: string): CancelablePromise<any>;
+    /**
      * Save context
      * Save conversation context for cross-agent sharing. Indexed in vector store for semantic search.
      * @param requestBody
@@ -240,6 +309,51 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static uploadAndSubscribeV2DependenciesUploadPost(formData: Body_upload_and_subscribe_v2_dependencies_upload_post): CancelablePromise<routes__v2__dependencies__SubscribeResponse>;
+    /**
+     * Start Extraction
+     * @param requestBody
+     * @returns ExtractResponse Successful Response
+     * @throws ApiError
+     */
+    static startExtractionV2ExtractPost(requestBody: ExtractRequest): CancelablePromise<ExtractResponse>;
+    /**
+     * Start Engineering Extraction
+     * @param requestBody
+     * @returns EngineeringExtractResponse Successful Response
+     * @throws ApiError
+     */
+    static startEngineeringExtractionV2ExtractEngineeringPost(requestBody: EngineeringExtractRequest): CancelablePromise<EngineeringExtractResponse>;
+    /**
+     * Get Engineering Extraction
+     * @param extractionId
+     * @returns EngineeringExtractResponse Successful Response
+     * @throws ApiError
+     */
+    static getEngineeringExtractionV2ExtractEngineeringExtractionIdGet(extractionId: string): CancelablePromise<EngineeringExtractResponse>;
+    /**
+     * Query Engineering Extraction
+     * @param extractionId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static queryEngineeringExtractionV2ExtractEngineeringExtractionIdQueryPost(extractionId: string, requestBody: EngineeringQueryRequest): CancelablePromise<any>;
+    /**
+     * Get Extraction
+     * @param extractionId
+     * @returns ExtractResponse Successful Response
+     * @throws ApiError
+     */
+    static getExtractionV2ExtractExtractionIdGet(extractionId: string): CancelablePromise<ExtractResponse>;
+    /**
+     * List Extractions
+     * @param type Filter by type: table or engineering
+     * @param limit
+     * @param offset
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listExtractionsV2ExtractionsGet(type?: (string | null), limit?: number, offset?: number): CancelablePromise<any>;
     /**
      * Github Glob
      * Find files matching a glob pattern in a GitHub repository.
@@ -557,7 +671,7 @@ export declare class V2ApiService {
      * @returns SourceListResponse Successful Response
      * @throws ApiError
      */
-    static listSourcesV2SourcesGet(type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null), query?: (string | null), status?: (string | null), categoryId?: (string | null), limit?: number, offset?: number): CancelablePromise<SourceListResponse>;
+    static listSourcesV2SourcesGet(type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null), query?: (string | null), status?: (string | null), categoryId?: (string | null), limit?: number, offset?: number): CancelablePromise<SourceListResponse>;
     /**
      * Create Source
      * @param requestBody
@@ -579,7 +693,7 @@ export declare class V2ApiService {
      * @returns SourceResolveResponse Successful Response
      * @throws ApiError
      */
-    static resolveSourceV2SourcesResolveGet(identifier: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceResolveResponse>;
+    static resolveSourceV2SourcesResolveGet(identifier: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceResolveResponse>;
     /**
      * Subscribe to a global source
      * Subscribe to an existing globally indexed public source. Creates a local reference for instant access without re-indexing.
@@ -603,7 +717,7 @@ export declare class V2ApiService {
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static getSourceV2SourcesSourceIdGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<Source>;
+    static getSourceV2SourcesSourceIdGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<Source>;
     /**
      * Update Source
      * @param sourceId
@@ -612,7 +726,7 @@ export declare class V2ApiService {
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static updateSourceV2SourcesSourceIdPatch(sourceId: string, requestBody: SourceUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<Source>;
+    static updateSourceV2SourcesSourceIdPatch(sourceId: string, requestBody: SourceUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<Source>;
     /**
      * Delete Source
      * @param sourceId
@@ -620,7 +734,7 @@ export declare class V2ApiService {
      * @returns SourceDeleteResponse Successful Response
      * @throws ApiError
      */
-    static deleteSourceV2SourcesSourceIdDelete(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceDeleteResponse>;
+    static deleteSourceV2SourcesSourceIdDelete(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceDeleteResponse>;
     /**
      * List Source Annotations
      * @param sourceId
@@ -628,7 +742,7 @@ export declare class V2ApiService {
      * @returns SourceAnnotation Successful Response
      * @throws ApiError
      */
-    static listSourceAnnotationsV2SourcesSourceIdAnnotationsGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<Array<SourceAnnotation>>;
+    static listSourceAnnotationsV2SourcesSourceIdAnnotationsGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<Array<SourceAnnotation>>;
     /**
      * Create Source Annotation
      * @param sourceId
@@ -637,7 +751,7 @@ export declare class V2ApiService {
      * @returns SourceCurationResponse Successful Response
      * @throws ApiError
      */
-    static createSourceAnnotationV2SourcesSourceIdAnnotationsPost(sourceId: string, requestBody: SourceAnnotationCreateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    static createSourceAnnotationV2SourcesSourceIdAnnotationsPost(sourceId: string, requestBody: SourceAnnotationCreateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceCurationResponse>;
     /**
      * Update Source Annotation
      * @param sourceId
@@ -647,7 +761,7 @@ export declare class V2ApiService {
      * @returns SourceCurationResponse Successful Response
      * @throws ApiError
      */
-    static updateSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdPatch(sourceId: string, annotationId: string, requestBody: SourceAnnotationUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    static updateSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdPatch(sourceId: string, annotationId: string, requestBody: SourceAnnotationUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceCurationResponse>;
     /**
      * Delete Source Annotation
      * @param sourceId
@@ -656,7 +770,7 @@ export declare class V2ApiService {
      * @returns SourceCurationResponse Successful Response
      * @throws ApiError
      */
-    static deleteSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdDelete(sourceId: string, annotationId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    static deleteSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdDelete(sourceId: string, annotationId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceCurationResponse>;
     /**
      * Get Source Classification
      * @param sourceId
@@ -664,7 +778,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static getSourceClassificationV2SourcesSourceIdClassificationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<any>;
+    static getSourceClassificationV2SourcesSourceIdClassificationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<any>;
     /**
      * Update Source Classification
      * @param sourceId
@@ -673,7 +787,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static updateSourceClassificationV2SourcesSourceIdClassificationPatch(sourceId: string, requestBody: ClassifyLocalFolderRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<any>;
+    static updateSourceClassificationV2SourcesSourceIdClassificationPatch(sourceId: string, requestBody: ClassifyLocalFolderRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<any>;
     /**
      * Get Source Content
      * @param sourceId
@@ -689,7 +803,7 @@ export declare class V2ApiService {
      * @returns SourceContentResponse Successful Response
      * @throws ApiError
      */
-    static getSourceContentV2SourcesSourceIdContentGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null), path?: (string | null), url?: (string | null), branch?: (string | null), page?: (number | null), treeNodeId?: (string | null), lineStart?: (number | null), lineEnd?: (number | null), maxLength?: (number | null)): CancelablePromise<SourceContentResponse>;
+    static getSourceContentV2SourcesSourceIdContentGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null), path?: (string | null), url?: (string | null), branch?: (string | null), page?: (number | null), treeNodeId?: (string | null), lineStart?: (number | null), lineEnd?: (number | null), maxLength?: (number | null)): CancelablePromise<SourceContentResponse>;
     /**
      * Get Source Curation
      * @param sourceId
@@ -697,7 +811,7 @@ export declare class V2ApiService {
      * @returns SourceCurationResponse Successful Response
      * @throws ApiError
      */
-    static getSourceCurationV2SourcesSourceIdCurationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    static getSourceCurationV2SourcesSourceIdCurationGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceCurationResponse>;
     /**
      * Update Source Curation
      * @param sourceId
@@ -706,7 +820,7 @@ export declare class V2ApiService {
      * @returns SourceCurationResponse Successful Response
      * @throws ApiError
      */
-    static updateSourceCurationV2SourcesSourceIdCurationPut(sourceId: string, requestBody: SourceCurationUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<SourceCurationResponse>;
+    static updateSourceCurationV2SourcesSourceIdCurationPut(sourceId: string, requestBody: SourceCurationUpdateRequest, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<SourceCurationResponse>;
     /**
      * Grep Source
      * @param sourceId
@@ -715,7 +829,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static grepSourceV2SourcesSourceIdGrepPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<any>;
+    static grepSourceV2SourcesSourceIdGrepPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<any>;
     /**
      * Sync Source
      * @param sourceId
@@ -724,7 +838,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static syncSourceV2SourcesSourceIdSyncPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null)): CancelablePromise<any>;
+    static syncSourceV2SourcesSourceIdSyncPost(sourceId: string, requestBody: Record<string, any>, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null)): CancelablePromise<any>;
     /**
      * Get Source Tree
      * @param sourceId
@@ -734,7 +848,7 @@ export declare class V2ApiService {
      * @returns any Successful Response
      * @throws ApiError
      */
-    static getSourceTreeV2SourcesSourceIdTreeGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null), branch?: (string | null), maxDepth?: number): CancelablePromise<any>;
+    static getSourceTreeV2SourcesSourceIdTreeGet(sourceId: string, type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null), branch?: (string | null), maxDepth?: number): CancelablePromise<any>;
     /**
      * Get usage summary
      * Get usage counts and limits for current billing period (queries, indexing, oracle, etc.).

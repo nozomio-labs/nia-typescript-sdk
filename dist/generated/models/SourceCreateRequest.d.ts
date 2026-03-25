@@ -1,7 +1,7 @@
 import type { DatabaseFileItem } from './DatabaseFileItem';
 import type { FileItem } from './FileItem';
 export type SourceCreateRequest = {
-    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive';
+    type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector';
     repository?: (string | null);
     branch?: (string | null);
     ref?: (string | null);

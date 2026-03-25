@@ -37,6 +37,11 @@ export type { DependencyAnalyzeRequest } from './models/DependencyAnalyzeRequest
 export type { DependencyItem } from './models/DependencyItem';
 export type { DependencySubscribeRequest } from './models/DependencySubscribeRequest';
 export type { EditedFile_Output } from './models/EditedFile_Output';
+export type { EngineeringExtractRequest } from './models/EngineeringExtractRequest';
+export type { EngineeringExtractResponse } from './models/EngineeringExtractResponse';
+export type { EngineeringQueryRequest } from './models/EngineeringQueryRequest';
+export type { ExtractRequest } from './models/ExtractRequest';
+export type { ExtractResponse } from './models/ExtractResponse';
 export type { FileItem } from './models/FileItem';
 export type { GitHubGlobRequest } from './models/GitHubGlobRequest';
 export type { GitHubReadRequest } from './models/GitHubReadRequest';
@@ -114,7 +119,9 @@ export type { WebSearchRequestWithMode } from './models/WebSearchRequestWithMode
 
 export { AdvisorService } from './services/AdvisorService';
 export { AuthBootstrapService } from './services/AuthBootstrapService';
+export { ConnectorsService } from './services/ConnectorsService';
 export { DefaultService } from './services/DefaultService';
+export { ExtractService } from './services/ExtractService';
 export { GithubSearchService } from './services/GithubSearchService';
 export { V2ApiService } from './services/V2ApiService';
 export { V2ApiCategoriesService } from './services/V2ApiCategoriesService';

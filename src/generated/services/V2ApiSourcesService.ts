@@ -35,7 +35,7 @@ export class V2ApiSourcesService {
      * @throws ApiError
      */
     public static listSourcesV2SourcesGet(
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
         query?: (string | null),
         status?: (string | null),
         categoryId?: (string | null),
@@ -86,7 +86,7 @@ export class V2ApiSourcesService {
      */
     public static resolveSourceV2SourcesResolveGet(
         identifier: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceResolveResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -149,7 +149,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceV2SourcesSourceIdGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -176,7 +176,7 @@ export class V2ApiSourcesService {
     public static updateSourceV2SourcesSourceIdPatch(
         sourceId: string,
         requestBody: SourceUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -203,7 +203,7 @@ export class V2ApiSourcesService {
      */
     public static deleteSourceV2SourcesSourceIdDelete(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceDeleteResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -228,7 +228,7 @@ export class V2ApiSourcesService {
      */
     public static listSourceAnnotationsV2SourcesSourceIdAnnotationsGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<Array<SourceAnnotation>> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -255,7 +255,7 @@ export class V2ApiSourcesService {
     public static createSourceAnnotationV2SourcesSourceIdAnnotationsPost(
         sourceId: string,
         requestBody: SourceAnnotationCreateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -286,7 +286,7 @@ export class V2ApiSourcesService {
         sourceId: string,
         annotationId: string,
         requestBody: SourceAnnotationUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -316,7 +316,7 @@ export class V2ApiSourcesService {
     public static deleteSourceAnnotationV2SourcesSourceIdAnnotationsAnnotationIdDelete(
         sourceId: string,
         annotationId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'DELETE',
@@ -342,7 +342,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceClassificationV2SourcesSourceIdClassificationGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -369,7 +369,7 @@ export class V2ApiSourcesService {
     public static updateSourceClassificationV2SourcesSourceIdClassificationPatch(
         sourceId: string,
         requestBody: ClassifyLocalFolderRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'PATCH',
@@ -404,7 +404,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceContentV2SourcesSourceIdContentGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
         path?: (string | null),
         url?: (string | null),
         branch?: (string | null),
@@ -445,7 +445,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceCurationV2SourcesSourceIdCurationGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'GET',
@@ -472,7 +472,7 @@ export class V2ApiSourcesService {
     public static updateSourceCurationV2SourcesSourceIdCurationPut(
         sourceId: string,
         requestBody: SourceCurationUpdateRequest,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<SourceCurationResponse> {
         return __request(OpenAPI, {
             method: 'PUT',
@@ -501,7 +501,7 @@ export class V2ApiSourcesService {
     public static grepSourceV2SourcesSourceIdGrepPost(
         sourceId: string,
         requestBody: Record<string, any>,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -530,7 +530,7 @@ export class V2ApiSourcesService {
     public static syncSourceV2SourcesSourceIdSyncPost(
         sourceId: string,
         requestBody: Record<string, any>,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
     ): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
@@ -559,7 +559,7 @@ export class V2ApiSourcesService {
      */
     public static getSourceTreeV2SourcesSourceIdTreeGet(
         sourceId: string,
-        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | null),
+        type?: ('repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector' | null),
         branch?: (string | null),
         maxDepth: number = 10,
     ): CancelablePromise<any> {

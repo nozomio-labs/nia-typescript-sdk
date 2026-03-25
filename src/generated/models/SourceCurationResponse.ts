@@ -16,7 +16,7 @@ export type SourceCurationResponse = {
     /**
      * Source type
      */
-    source_type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive';
+    source_type: 'repository' | 'documentation' | 'research_paper' | 'huggingface_dataset' | 'local_folder' | 'slack' | 'google_drive' | 'connector';
     /**
      * Derived trust signals
      */
