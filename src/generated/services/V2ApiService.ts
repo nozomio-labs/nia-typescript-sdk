@@ -23,6 +23,8 @@ import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestW
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
+import type { DocumentQueryRequest } from '../models/DocumentQueryRequest';
+import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
 import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
 import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
@@ -674,6 +676,26 @@ export class V2ApiService {
             url: '/dependencies/upload',
             formData: formData,
             mediaType: 'multipart/form-data',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Query a document with an AI agent
+     * Run the full document agent against an indexed PDF or document. The agent uses tools (search, read sections, read pages) to research the document and produce a comprehensive answer with citations. Supports optional structured output via json_schema.
+     * @param requestBody
+     * @returns DocumentQueryResponse Successful Response
+     * @throws ApiError
+     */
+    public static documentQueryV2DocumentAgentPost(
+        requestBody: DocumentQueryRequest,
+    ): CancelablePromise<DocumentQueryResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/document/agent',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

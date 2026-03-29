@@ -9,6 +9,7 @@ export { AdvisorService } from './services/AdvisorService';
 export { AuthBootstrapService } from './services/AuthBootstrapService';
 export { ConnectorsService } from './services/ConnectorsService';
 export { DefaultService } from './services/DefaultService';
+export { DocumentAgentService } from './services/DocumentAgentService';
 export { ExtractService } from './services/ExtractService';
 export { FilesystemService } from './services/FilesystemService';
 export { GithubSearchService } from './services/GithubSearchService';

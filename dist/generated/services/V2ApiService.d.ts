@@ -19,6 +19,8 @@ import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestW
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
+import type { DocumentQueryRequest } from '../models/DocumentQueryRequest';
+import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
 import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
 import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
@@ -314,6 +316,14 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static uploadAndSubscribeV2DependenciesUploadPost(formData: Body_upload_and_subscribe_v2_dependencies_upload_post): CancelablePromise<routes__v2__dependencies__SubscribeResponse>;
+    /**
+     * Query a document with an AI agent
+     * Run the full document agent against an indexed PDF or document. The agent uses tools (search, read sections, read pages) to research the document and produce a comprehensive answer with citations. Supports optional structured output via json_schema.
+     * @param requestBody
+     * @returns DocumentQueryResponse Successful Response
+     * @throws ApiError
+     */
+    static documentQueryV2DocumentAgentPost(requestBody: DocumentQueryRequest): CancelablePromise<DocumentQueryResponse>;
     /**
      * Start Extraction
      * @param requestBody
