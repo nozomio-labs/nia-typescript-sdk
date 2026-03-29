@@ -10,6 +10,7 @@ export { AuthBootstrapService } from './services/AuthBootstrapService';
 export { ConnectorsService } from './services/ConnectorsService';
 export { DefaultService } from './services/DefaultService';
 export { ExtractService } from './services/ExtractService';
+export { FilesystemService } from './services/FilesystemService';
 export { GithubSearchService } from './services/GithubSearchService';
 export { V2ApiService } from './services/V2ApiService';
 export { V2ApiCategoriesService } from './services/V2ApiCategoriesService';
