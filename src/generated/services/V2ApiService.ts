@@ -23,6 +23,8 @@ import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestW
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
+import type { DetectRequest } from '../models/DetectRequest';
+import type { DetectResponse } from '../models/DetectResponse';
 import type { DocumentQueryRequest } from '../models/DocumentQueryRequest';
 import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
@@ -715,6 +717,68 @@ export class V2ApiService {
             url: '/extract',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Start Detect Extraction
+     * @param requestBody
+     * @returns DetectResponse Successful Response
+     * @throws ApiError
+     */
+    public static startDetectExtractionV2ExtractDetectPost(
+        requestBody: DetectRequest,
+    ): CancelablePromise<DetectResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/extract/detect',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Detect Extraction
+     * @param extractionId
+     * @returns DetectResponse Successful Response
+     * @throws ApiError
+     */
+    public static getDetectExtractionV2ExtractDetectExtractionIdGet(
+        extractionId: string,
+    ): CancelablePromise<DetectResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/extract/detect/{extraction_id}',
+            path: {
+                'extraction_id': extractionId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Detect Page Image
+     * @param extractionId
+     * @param pageNumber
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static getDetectPageImageV2ExtractDetectExtractionIdPagePageNumberImageGet(
+        extractionId: string,
+        pageNumber: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/extract/detect/{extraction_id}/page/{page_number}/image',
+            path: {
+                'extraction_id': extractionId,
+                'page_number': pageNumber,
+            },
             errors: {
                 422: `Validation Error`,
             },

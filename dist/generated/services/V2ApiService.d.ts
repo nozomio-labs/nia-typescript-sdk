@@ -19,6 +19,8 @@ import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestW
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
+import type { DetectRequest } from '../models/DetectRequest';
+import type { DetectResponse } from '../models/DetectResponse';
 import type { DocumentQueryRequest } from '../models/DocumentQueryRequest';
 import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
@@ -331,6 +333,28 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static startExtractionV2ExtractPost(requestBody: ExtractRequest): CancelablePromise<ExtractResponse>;
+    /**
+     * Start Detect Extraction
+     * @param requestBody
+     * @returns DetectResponse Successful Response
+     * @throws ApiError
+     */
+    static startDetectExtractionV2ExtractDetectPost(requestBody: DetectRequest): CancelablePromise<DetectResponse>;
+    /**
+     * Get Detect Extraction
+     * @param extractionId
+     * @returns DetectResponse Successful Response
+     * @throws ApiError
+     */
+    static getDetectExtractionV2ExtractDetectExtractionIdGet(extractionId: string): CancelablePromise<DetectResponse>;
+    /**
+     * Get Detect Page Image
+     * @param extractionId
+     * @param pageNumber
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getDetectPageImageV2ExtractDetectExtractionIdPagePageNumberImageGet(extractionId: string, pageNumber: number): CancelablePromise<any>;
     /**
      * Start Engineering Extraction
      * @param requestBody

@@ -36,6 +36,8 @@ export type { DeleteResponse } from './models/DeleteResponse';
 export type { DependencyAnalyzeRequest } from './models/DependencyAnalyzeRequest';
 export type { DependencyItem } from './models/DependencyItem';
 export type { DependencySubscribeRequest } from './models/DependencySubscribeRequest';
+export type { DetectRequest } from './models/DetectRequest';
+export type { DetectResponse } from './models/DetectResponse';
 export type { DocumentCitation } from './models/DocumentCitation';
 export type { DocumentQueryRequest } from './models/DocumentQueryRequest';
 export type { DocumentQueryResponse } from './models/DocumentQueryResponse';

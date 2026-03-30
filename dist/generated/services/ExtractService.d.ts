@@ -1,3 +1,5 @@
+import type { DetectRequest } from '../models/DetectRequest';
+import type { DetectResponse } from '../models/DetectResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
 import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
 import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
@@ -12,6 +14,28 @@ export declare class ExtractService {
      * @throws ApiError
      */
     static startExtractionV2ExtractPost(requestBody: ExtractRequest): CancelablePromise<ExtractResponse>;
+    /**
+     * Start Detect Extraction
+     * @param requestBody
+     * @returns DetectResponse Successful Response
+     * @throws ApiError
+     */
+    static startDetectExtractionV2ExtractDetectPost(requestBody: DetectRequest): CancelablePromise<DetectResponse>;
+    /**
+     * Get Detect Extraction
+     * @param extractionId
+     * @returns DetectResponse Successful Response
+     * @throws ApiError
+     */
+    static getDetectExtractionV2ExtractDetectExtractionIdGet(extractionId: string): CancelablePromise<DetectResponse>;
+    /**
+     * Get Detect Page Image
+     * @param extractionId
+     * @param pageNumber
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getDetectPageImageV2ExtractDetectExtractionIdPagePageNumberImageGet(extractionId: string, pageNumber: number): CancelablePromise<any>;
     /**
      * Start Engineering Extraction
      * @param requestBody
