@@ -8,4 +8,6 @@ export type DocumentCitation = {
     section_title?: (string | null);
     section_path?: (Array<string> | null);
     tool_source: string;
+    source_id?: (string | null);
+    source_name?: (string | null);
 };

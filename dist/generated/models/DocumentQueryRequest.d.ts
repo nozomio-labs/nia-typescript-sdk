@@ -3,11 +3,15 @@
  */
 export type DocumentQueryRequest = {
     /**
-     * Data source ID of the indexed document
+     * Data source ID of a single indexed document
      */
-    source_id: string;
+    source_id?: (string | null);
     /**
-     * Question to ask about the document
+     * List of data source IDs for multi-document queries (max 10)
+     */
+    source_ids?: (Array<string> | null);
+    /**
+     * Question to ask about the document(s)
      */
     query: string;
     /**

@@ -319,8 +319,8 @@ export declare class V2ApiService {
      */
     static uploadAndSubscribeV2DependenciesUploadPost(formData: Body_upload_and_subscribe_v2_dependencies_upload_post): CancelablePromise<routes__v2__dependencies__SubscribeResponse>;
     /**
-     * Query a document with an AI agent
-     * Run the full document agent against an indexed PDF or document. The agent uses tools (search, read sections, read pages) to research the document and produce a comprehensive answer with citations. Supports optional structured output via json_schema.
+     * Query document(s) with an AI agent
+     * Run the full document agent against one or more indexed PDFs or documents. The agent uses tools (search, read sections, read pages) to research the document(s) and produce a comprehensive answer with citations. Supports optional structured output via json_schema.
      * @param requestBody
      * @returns DocumentQueryResponse Successful Response
      * @throws ApiError
