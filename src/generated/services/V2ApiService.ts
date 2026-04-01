@@ -42,12 +42,17 @@ import type { GoogleDriveOAuthCallbackRequest } from '../models/GoogleDriveOAuth
 import type { GrepRequestBody } from '../models/GrepRequestBody';
 import type { LoginKeyRequest } from '../models/LoginKeyRequest';
 import type { LoginKeyResponse } from '../models/LoginKeyResponse';
+import type { LoginRequest } from '../models/LoginRequest';
+import type { LoginResponse } from '../models/LoginResponse';
+import type { LoginVerifyRequest } from '../models/LoginVerifyRequest';
+import type { LoginVerifyResponse } from '../models/LoginVerifyResponse';
 import type { MkdirBody } from '../models/MkdirBody';
 import type { MoveBody } from '../models/MoveBody';
 import type { PackageSearchGrepRequest } from '../models/PackageSearchGrepRequest';
 import type { PackageSearchHybridRequest } from '../models/PackageSearchHybridRequest';
 import type { PackageSearchReadFileRequest } from '../models/PackageSearchReadFileRequest';
 import type { QuerySearchRequest } from '../models/QuerySearchRequest';
+import type { ResendCodeResponse } from '../models/ResendCodeResponse';
 import type { routes__v2__categories__CategoryCreate } from '../models/routes__v2__categories__CategoryCreate';
 import type { routes__v2__categories__CategoryUpdate } from '../models/routes__v2__categories__CategoryUpdate';
 import type { routes__v2__dependencies__SubscribeResponse } from '../models/routes__v2__dependencies__SubscribeResponse';
@@ -80,6 +85,8 @@ import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse'
 import type { TracerRequest } from '../models/TracerRequest';
 import type { UniversalSearchRequestWithMode } from '../models/UniversalSearchRequestWithMode';
 import type { UsageSummaryResponse } from '../models/UsageSummaryResponse';
+import type { VerifyRequest } from '../models/VerifyRequest';
+import type { VerifyResponse } from '../models/VerifyResponse';
 import type { WebSearchRequestWithMode } from '../models/WebSearchRequestWithMode';
 import type { WriteBatchBody } from '../models/WriteBatchBody';
 import type { WriteFileBody } from '../models/WriteFileBody';
@@ -108,10 +115,11 @@ export class V2ApiService {
         });
     }
     /**
+     * @deprecated
      * Bootstrap Key
-     * Exchange a bootstrap token for an nk_ API key (one-time use).
+     * **Deprecated** — Use POST /v2/auth/signup (returns key directly) + POST /v2/auth/verify instead.
      *
-     * The returned api_key is shown only once — store it securely.
+     * Exchange a bootstrap token for an nk_ API key (one-time use).
      * @param requestBody
      * @returns BootstrapKeyResponse Successful Response
      * @throws ApiError
@@ -130,11 +138,34 @@ export class V2ApiService {
         });
     }
     /**
-     * Login Key
-     * Authenticate with email + password and receive a new nk_ API key.
+     * Login
+     * Request a verification code for passwordless login.
      *
-     * For returning users who already have an account but need a new key
-     * (e.g. an AI agent setting up in a new environment).
+     * A 6-digit code is sent to the provided email. Exchange it via
+     * POST /v2/auth/login/verify to receive a new API key.
+     * @param requestBody
+     * @returns LoginResponse Successful Response
+     * @throws ApiError
+     */
+    public static loginV2AuthLoginPost(
+        requestBody: LoginRequest,
+    ): CancelablePromise<LoginResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/login',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * @deprecated
+     * Login Key
+     * **Deprecated** — Use POST /v2/auth/login + POST /v2/auth/login/verify instead.
+     *
+     * Authenticate with email + password and receive a new nk_ API key.
      * @param requestBody
      * @returns LoginKeyResponse Successful Response
      * @throws ApiError
@@ -153,11 +184,46 @@ export class V2ApiService {
         });
     }
     /**
-     * Signup
-     * Create a new account and receive a bootstrap token.
+     * Login Verify
+     * Verify login code and receive a new full-access API key.
+     * @param requestBody
+     * @returns LoginVerifyResponse Successful Response
+     * @throws ApiError
+     */
+    public static loginVerifyV2AuthLoginVerifyPost(
+        requestBody: LoginVerifyRequest,
+    ): CancelablePromise<LoginVerifyResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/login/verify',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Resend Code
+     * Resend the verification code for an unverified API key.
      *
-     * The bootstrap token can be exchanged exactly once via POST /v2/auth/bootstrap-key
-     * to obtain an nk_ API key.
+     * Requires the read-only API key in the Authorization header.
+     * @returns ResendCodeResponse Successful Response
+     * @throws ApiError
+     */
+    public static resendCodeV2AuthResendCodePost(): CancelablePromise<ResendCodeResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/resend-code',
+        });
+    }
+    /**
+     * Signup
+     * Create a new account and receive a read-only API key.
+     *
+     * A 6-digit verification code is sent to the provided email. Call
+     * POST /v2/auth/verify with the code (and this key in the Authorization
+     * header) to upgrade to full access.
      * @param requestBody
      * @returns SignupResponse Successful Response
      * @throws ApiError
@@ -168,6 +234,29 @@ export class V2ApiService {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/auth/signup',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Verify
+     * Verify your account using the 6-digit code sent to your email.
+     *
+     * On success, the API key used in the Authorization header is upgraded
+     * from read-only to full access.
+     * @param requestBody
+     * @returns VerifyResponse Successful Response
+     * @throws ApiError
+     */
+    public static verifyV2AuthVerifyPost(
+        requestBody: VerifyRequest,
+    ): CancelablePromise<VerifyResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/auth/verify',
             body: requestBody,
             mediaType: 'application/json',
             errors: {

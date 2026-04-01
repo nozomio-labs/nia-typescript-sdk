@@ -4,9 +4,9 @@ export type SignupRequest = {
      */
     email: string;
     /**
-     * Account password (min 8 chars)
+     * Optional password for web login (random if omitted)
      */
-    password: string;
+    password?: (string | null);
     first_name?: (string | null);
     last_name?: (string | null);
     /**

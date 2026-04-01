@@ -63,6 +63,10 @@ export type { LineageMetadata } from './models/LineageMetadata';
 export type { LocalSourceFilters } from './models/LocalSourceFilters';
 export type { LoginKeyRequest } from './models/LoginKeyRequest';
 export type { LoginKeyResponse } from './models/LoginKeyResponse';
+export type { LoginRequest } from './models/LoginRequest';
+export type { LoginResponse } from './models/LoginResponse';
+export type { LoginVerifyRequest } from './models/LoginVerifyRequest';
+export type { LoginVerifyResponse } from './models/LoginVerifyResponse';
 export type { MappingItem } from './models/MappingItem';
 export type { MkdirBody } from './models/MkdirBody';
 export type { MoveBody } from './models/MoveBody';
@@ -74,6 +78,7 @@ export type { PackageSearchHybridRequest } from './models/PackageSearchHybridReq
 export type { PackageSearchReadFileRequest } from './models/PackageSearchReadFileRequest';
 export type { PaginationInfo } from './models/PaginationInfo';
 export type { QuerySearchRequest } from './models/QuerySearchRequest';
+export type { ResendCodeResponse } from './models/ResendCodeResponse';
 export type { routes__v2__categories__CategoryCreate } from './models/routes__v2__categories__CategoryCreate';
 export type { routes__v2__categories__CategoryUpdate } from './models/routes__v2__categories__CategoryUpdate';
 export type { routes__v2__contexts__EditedFile } from './models/routes__v2__contexts__EditedFile';
@@ -123,6 +128,8 @@ export type { UniversalSearchRequestWithMode } from './models/UniversalSearchReq
 export type { UsageSummaryResponse } from './models/UsageSummaryResponse';
 export type { UsageSummaryUsageEntry } from './models/UsageSummaryUsageEntry';
 export type { ValidationError } from './models/ValidationError';
+export type { VerifyRequest } from './models/VerifyRequest';
+export type { VerifyResponse } from './models/VerifyResponse';
 export type { WebSearchRequestWithMode } from './models/WebSearchRequestWithMode';
 export type { WriteBatchBody } from './models/WriteBatchBody';
 export type { WriteFileBody } from './models/WriteFileBody';

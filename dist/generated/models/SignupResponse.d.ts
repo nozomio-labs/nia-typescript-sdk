@@ -1,13 +1,13 @@
 export type SignupResponse = {
+    /**
+     * Read-only API key — verify via POST /v2/auth/verify to unlock full access
+     */
+    api_key: string;
+    api_key_id: string;
     user_id: string;
     organization_id: string;
     /**
-     * One-time token to exchange for an API key via /v2/auth/bootstrap-key
+     * Whether the account has been verified (always false on signup)
      */
-    bootstrap_token: string;
-    expires_at: string;
-    /**
-     * Whether the email is already verified in the identity provider
-     */
-    email_verified?: boolean;
+    verified?: boolean;
 };
