@@ -10,12 +10,29 @@ export declare class ShellDocsService {
      */
     static indexDocsV2ShellDocsIndexPost(requestBody: IndexRequest): CancelablePromise<any>;
     /**
+     * Shell Docs Load
+     * Combined status + dump in one request. Returns status info + files if indexed.
+     * @param url Documentation URL
+     * @param pathsOnly Return paths without content (for lazy loading)
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static shellDocsLoadV2ShellDocsLoadGet(url: string, pathsOnly?: boolean): CancelablePromise<any>;
+    /**
      * Check Status
      * @param url Documentation URL
      * @returns any Successful Response
      * @throws ApiError
      */
     static checkStatusV2ShellDocsStatusGet(url: string): CancelablePromise<any>;
+    /**
+     * Shell Docs Dump
+     * @param namespace
+     * @param pathsOnly
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static shellDocsDumpV2ShellDocsNamespaceDumpGet(namespace: string, pathsOnly?: boolean): CancelablePromise<any>;
     /**
      * Shell Docs Find
      * @param namespace

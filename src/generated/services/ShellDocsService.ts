@@ -28,6 +28,30 @@ export class ShellDocsService {
         });
     }
     /**
+     * Shell Docs Load
+     * Combined status + dump in one request. Returns status info + files if indexed.
+     * @param url Documentation URL
+     * @param pathsOnly Return paths without content (for lazy loading)
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static shellDocsLoadV2ShellDocsLoadGet(
+        url: string,
+        pathsOnly: boolean = false,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/shell-docs/load',
+            query: {
+                'url': url,
+                'paths_only': pathsOnly,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Check Status
      * @param url Documentation URL
      * @returns any Successful Response
@@ -41,6 +65,31 @@ export class ShellDocsService {
             url: '/shell-docs/status',
             query: {
                 'url': url,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Shell Docs Dump
+     * @param namespace
+     * @param pathsOnly
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static shellDocsDumpV2ShellDocsNamespaceDumpGet(
+        namespace: string,
+        pathsOnly: boolean = false,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/shell-docs/{namespace}/dump',
+            path: {
+                'namespace': namespace,
+            },
+            query: {
+                'paths_only': pathsOnly,
             },
             errors: {
                 422: `Validation Error`,
