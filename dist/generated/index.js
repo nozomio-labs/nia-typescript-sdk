@@ -13,6 +13,7 @@ export { DocumentAgentService } from './services/DocumentAgentService';
 export { ExtractService } from './services/ExtractService';
 export { FilesystemService } from './services/FilesystemService';
 export { GithubSearchService } from './services/GithubSearchService';
+export { ShellDocsService } from './services/ShellDocsService';
 export { V2ApiService } from './services/V2ApiService';
 export { V2ApiCategoriesService } from './services/V2ApiCategoriesService';
 export { V2ApiContextsService } from './services/V2ApiContextsService';
