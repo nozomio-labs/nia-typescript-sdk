@@ -4,6 +4,7 @@
 /* eslint-disable */
 import type { GrepRequest } from '../models/GrepRequest';
 import type { IndexRequest } from '../models/IndexRequest';
+import type { TelemetryPayload } from '../models/TelemetryPayload';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -66,6 +67,25 @@ export class ShellDocsService {
             query: {
                 'url': url,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Ingest Telemetry
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static ingestTelemetryV2ShellDocsTelemetryPost(
+        requestBody: TelemetryPayload,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/shell-docs/telemetry',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

@@ -120,6 +120,8 @@ export type { SourceUploadUrlResponse } from './models/SourceUploadUrlResponse';
 export type { SubscriptionResultItem } from './models/SubscriptionResultItem';
 export type { SubscriptionResults } from './models/SubscriptionResults';
 export type { SubscriptionSummary } from './models/SubscriptionSummary';
+export type { TelemetryEvent } from './models/TelemetryEvent';
+export type { TelemetryPayload } from './models/TelemetryPayload';
 export type { TracerRequest } from './models/TracerRequest';
 export type { UniversalSearchRequestWithMode } from './models/UniversalSearchRequestWithMode';
 export type { UsageSummaryResponse } from './models/UsageSummaryResponse';

@@ -80,6 +80,7 @@ import type { SourcesSummaryResponse } from '../models/SourcesSummaryResponse';
 import type { SourceUpdateRequest } from '../models/SourceUpdateRequest';
 import type { SourceUploadUrlRequest } from '../models/SourceUploadUrlRequest';
 import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse';
+import type { TelemetryPayload } from '../models/TelemetryPayload';
 import type { TracerRequest } from '../models/TracerRequest';
 import type { UniversalSearchRequestWithMode } from '../models/UniversalSearchRequestWithMode';
 import type { UsageSummaryResponse } from '../models/UsageSummaryResponse';
@@ -757,6 +758,13 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static checkStatusV2ShellDocsStatusGet(url: string): CancelablePromise<any>;
+    /**
+     * Ingest Telemetry
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static ingestTelemetryV2ShellDocsTelemetryPost(requestBody: TelemetryPayload): CancelablePromise<any>;
     /**
      * Shell Docs Dump
      * @param namespace

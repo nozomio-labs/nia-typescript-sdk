@@ -1,5 +1,6 @@
 import type { GrepRequest } from '../models/GrepRequest';
 import type { IndexRequest } from '../models/IndexRequest';
+import type { TelemetryPayload } from '../models/TelemetryPayload';
 import type { CancelablePromise } from '../core/CancelablePromise';
 export declare class ShellDocsService {
     /**
@@ -25,6 +26,13 @@ export declare class ShellDocsService {
      * @throws ApiError
      */
     static checkStatusV2ShellDocsStatusGet(url: string): CancelablePromise<any>;
+    /**
+     * Ingest Telemetry
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static ingestTelemetryV2ShellDocsTelemetryPost(requestBody: TelemetryPayload): CancelablePromise<any>;
     /**
      * Shell Docs Dump
      * @param namespace

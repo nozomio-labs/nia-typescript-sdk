@@ -84,6 +84,7 @@ import type { SourcesSummaryResponse } from '../models/SourcesSummaryResponse';
 import type { SourceUpdateRequest } from '../models/SourceUpdateRequest';
 import type { SourceUploadUrlRequest } from '../models/SourceUploadUrlRequest';
 import type { SourceUploadUrlResponse } from '../models/SourceUploadUrlResponse';
+import type { TelemetryPayload } from '../models/TelemetryPayload';
 import type { TracerRequest } from '../models/TracerRequest';
 import type { UniversalSearchRequestWithMode } from '../models/UniversalSearchRequestWithMode';
 import type { UsageSummaryResponse } from '../models/UsageSummaryResponse';
@@ -1840,6 +1841,25 @@ export class V2ApiService {
             query: {
                 'url': url,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Ingest Telemetry
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static ingestTelemetryV2ShellDocsTelemetryPost(
+        requestBody: TelemetryPayload,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/shell-docs/telemetry',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

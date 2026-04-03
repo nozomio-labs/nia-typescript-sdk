@@ -58,6 +58,23 @@ export class ShellDocsService {
         });
     }
     /**
+     * Ingest Telemetry
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static ingestTelemetryV2ShellDocsTelemetryPost(requestBody) {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/shell-docs/telemetry',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Shell Docs Dump
      * @param namespace
      * @param pathsOnly
