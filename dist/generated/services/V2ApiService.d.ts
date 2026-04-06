@@ -953,6 +953,20 @@ export declare class V2ApiService {
      */
     static getSourcesSummaryV2SourcesSummaryGet(): CancelablePromise<SourcesSummaryResponse>;
     /**
+     * Explore Global Sources
+     * Browse the global catalog of publicly indexed sources.
+     * @param search Search by URL or name
+     * @param sourceType Filter by type: repository | documentation | research_paper | huggingface_dataset
+     * @param status Filter by status
+     * @param sort Sort: recently_indexed | recently_updated | most_tokens | most_snippets | most_subscribed | relevance
+     * @param order Sort direction: asc | desc
+     * @param limit
+     * @param offset
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static exploreGlobalSourcesV2SourcesExploreGet(search?: string, sourceType?: string, status?: string, sort?: string, order?: string, limit?: number, offset?: number): CancelablePromise<any>;
+    /**
      * Resolve Source
      * @param identifier Display name, URL, or slug
      * @param type Source type hint
