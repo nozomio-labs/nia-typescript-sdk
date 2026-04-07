@@ -5,6 +5,7 @@
 import type { AdvisorRequest } from '../models/AdvisorRequest';
 import type { AdvisorResponse } from '../models/AdvisorResponse';
 import type { AnalyzeResponse } from '../models/AnalyzeResponse';
+import type { AnswerFeedbackRequest } from '../models/AnswerFeedbackRequest';
 import type { Body_upload_and_subscribe_v2_dependencies_upload_post } from '../models/Body_upload_and_subscribe_v2_dependencies_upload_post';
 import type { BootstrapKeyRequest } from '../models/BootstrapKeyRequest';
 import type { BootstrapKeyResponse } from '../models/BootstrapKeyResponse';
@@ -78,6 +79,8 @@ import type { SourceCreateRequest } from '../models/SourceCreateRequest';
 import type { SourceCurationResponse } from '../models/SourceCurationResponse';
 import type { SourceCurationUpdateRequest } from '../models/SourceCurationUpdateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
+import type { SourceFeedbackRequest } from '../models/SourceFeedbackRequest';
+import type { SourceInteractionRequest } from '../models/SourceInteractionRequest';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
 import type { SourcesSummaryResponse } from '../models/SourcesSummaryResponse';
@@ -980,6 +983,66 @@ export class V2ApiService {
                 'limit': limit,
                 'offset': offset,
             },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Submit Answer Feedback
+     * Explicit thumbs up/down on an assistant answer.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static submitAnswerFeedbackV2FeedbackAnswerPost(
+        requestBody: AnswerFeedbackRequest,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/feedback/answer',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Submit Source Interaction
+     * Implicit interaction events (copy, expand, dwell, click-through).
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static submitSourceInteractionV2FeedbackInteractionPost(
+        requestBody: SourceInteractionRequest,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/feedback/interaction',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Submit Source Feedback
+     * Per-source helpful/irrelevant/partially_relevant feedback.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static submitSourceFeedbackV2FeedbackSourcePost(
+        requestBody: SourceFeedbackRequest,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/feedback/source',
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 422: `Validation Error`,
             },

@@ -11,6 +11,7 @@ export { ConnectorsService } from './services/ConnectorsService';
 export { DefaultService } from './services/DefaultService';
 export { DocumentAgentService } from './services/DocumentAgentService';
 export { ExtractService } from './services/ExtractService';
+export { FeedbackService } from './services/FeedbackService';
 export { FilesystemService } from './services/FilesystemService';
 export { GithubSearchService } from './services/GithubSearchService';
 export { ShellDocsService } from './services/ShellDocsService';

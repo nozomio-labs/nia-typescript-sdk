@@ -1,6 +1,7 @@
 import type { AdvisorRequest } from '../models/AdvisorRequest';
 import type { AdvisorResponse } from '../models/AdvisorResponse';
 import type { AnalyzeResponse } from '../models/AnalyzeResponse';
+import type { AnswerFeedbackRequest } from '../models/AnswerFeedbackRequest';
 import type { Body_upload_and_subscribe_v2_dependencies_upload_post } from '../models/Body_upload_and_subscribe_v2_dependencies_upload_post';
 import type { BootstrapKeyRequest } from '../models/BootstrapKeyRequest';
 import type { BootstrapKeyResponse } from '../models/BootstrapKeyResponse';
@@ -74,6 +75,8 @@ import type { SourceCreateRequest } from '../models/SourceCreateRequest';
 import type { SourceCurationResponse } from '../models/SourceCurationResponse';
 import type { SourceCurationUpdateRequest } from '../models/SourceCurationUpdateRequest';
 import type { SourceDeleteResponse } from '../models/SourceDeleteResponse';
+import type { SourceFeedbackRequest } from '../models/SourceFeedbackRequest';
+import type { SourceInteractionRequest } from '../models/SourceInteractionRequest';
 import type { SourceListResponse } from '../models/SourceListResponse';
 import type { SourceResolveResponse } from '../models/SourceResolveResponse';
 import type { SourcesSummaryResponse } from '../models/SourcesSummaryResponse';
@@ -444,6 +447,30 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static listExtractionsV2ExtractionsGet(type?: (string | null), limit?: number, offset?: number): CancelablePromise<any>;
+    /**
+     * Submit Answer Feedback
+     * Explicit thumbs up/down on an assistant answer.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static submitAnswerFeedbackV2FeedbackAnswerPost(requestBody: AnswerFeedbackRequest): CancelablePromise<any>;
+    /**
+     * Submit Source Interaction
+     * Implicit interaction events (copy, expand, dwell, click-through).
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static submitSourceInteractionV2FeedbackInteractionPost(requestBody: SourceInteractionRequest): CancelablePromise<any>;
+    /**
+     * Submit Source Feedback
+     * Per-source helpful/irrelevant/partially_relevant feedback.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static submitSourceFeedbackV2FeedbackSourcePost(requestBody: SourceFeedbackRequest): CancelablePromise<any>;
     /**
      * Fs Write
      * @param sourceId
