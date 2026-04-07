@@ -32,10 +32,11 @@ export declare class V2ApiSourcesService {
     /**
      * Create Source
      * @param requestBody
+     * @param organizationId Organization ID for usage tracking
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static createSourceV2SourcesPost(requestBody: SourceCreateRequest): CancelablePromise<Source>;
+    static createSourceV2SourcesPost(requestBody: SourceCreateRequest, organizationId?: (string | null)): CancelablePromise<Source>;
     /**
      * Explore Global Sources
      * Browse the global catalog of publicly indexed sources.

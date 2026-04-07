@@ -941,10 +941,11 @@ export declare class V2ApiService {
     /**
      * Create Source
      * @param requestBody
+     * @param organizationId Organization ID for usage tracking
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static createSourceV2SourcesPost(requestBody: SourceCreateRequest): CancelablePromise<Source>;
+    static createSourceV2SourcesPost(requestBody: SourceCreateRequest, organizationId?: (string | null)): CancelablePromise<Source>;
     /**
      * Get sources summary
      * Get counts and recent names for all source types. Designed for quick inventory checks.

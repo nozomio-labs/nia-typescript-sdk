@@ -2339,15 +2339,20 @@ export class V2ApiService {
     /**
      * Create Source
      * @param requestBody
+     * @param organizationId Organization ID for usage tracking
      * @returns Source Successful Response
      * @throws ApiError
      */
     public static createSourceV2SourcesPost(
         requestBody: SourceCreateRequest,
+        organizationId?: (string | null),
     ): CancelablePromise<Source> {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/sources',
+            query: {
+                'organization_id': organizationId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {

@@ -1992,13 +1992,17 @@ export class V2ApiService {
     /**
      * Create Source
      * @param requestBody
+     * @param organizationId Organization ID for usage tracking
      * @returns Source Successful Response
      * @throws ApiError
      */
-    static createSourceV2SourcesPost(requestBody) {
+    static createSourceV2SourcesPost(requestBody, organizationId) {
         return __request(OpenAPI, {
             method: 'POST',
             url: '/sources',
+            query: {
+                'organization_id': organizationId,
+            },
             body: requestBody,
             mediaType: 'application/json',
             errors: {
