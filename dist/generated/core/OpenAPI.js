@@ -1,6 +1,6 @@
 export const OpenAPI = {
     BASE: '',
-    VERSION: '1.0.0',
+    VERSION: '1.1.0',
     WITH_CREDENTIALS: false,
     CREDENTIALS: 'include',
     TOKEN: undefined,

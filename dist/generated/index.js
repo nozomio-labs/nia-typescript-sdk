@@ -24,3 +24,4 @@ export { V2ApiSearchService } from './services/V2ApiSearchService';
 export { V2ApiSlackService } from './services/V2ApiSlackService';
 export { V2ApiSourcesService } from './services/V2ApiSourcesService';
 export { V2ApiXService } from './services/V2ApiXService';
+export { VaultsService } from './services/VaultsService';

@@ -11,7 +11,7 @@ export type DocumentQueryRequest = {
      */
     source_id?: (string | null);
     /**
-     * List of data source IDs for multi-document queries (max 10)
+     * List of data source IDs for multi-document queries (max 50)
      */
     source_ids?: (Array<string> | null);
     /**

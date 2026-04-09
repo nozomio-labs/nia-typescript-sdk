@@ -22,6 +22,7 @@ import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeReques
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
 import type { DetectRequest } from '../models/DetectRequest';
 import type { DetectResponse } from '../models/DetectResponse';
+import type { DocumentAgentJobResponse } from '../models/DocumentAgentJobResponse';
 import type { DocumentQueryRequest } from '../models/DocumentQueryRequest';
 import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
@@ -38,6 +39,7 @@ import type { GoogleDriveInstallRequest } from '../models/GoogleDriveInstallRequ
 import type { GoogleDriveOAuthCallbackRequest } from '../models/GoogleDriveOAuthCallbackRequest';
 import type { GrepRequest } from '../models/GrepRequest';
 import type { GrepRequestBody } from '../models/GrepRequestBody';
+import type { ImportRequest } from '../models/ImportRequest';
 import type { IndexRequest } from '../models/IndexRequest';
 import type { LoginKeyRequest } from '../models/LoginKeyRequest';
 import type { LoginKeyResponse } from '../models/LoginKeyResponse';
@@ -94,6 +96,21 @@ import type { WriteBatchBody } from '../models/WriteBatchBody';
 import type { WriteFileBody } from '../models/WriteFileBody';
 import type { CancelablePromise } from '../core/CancelablePromise';
 export declare class V2ApiService {
+    /**
+     * Export Account
+     * @param authorization
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static exportAccountV2AccountExportPost(authorization?: (string | null)): CancelablePromise<any>;
+    /**
+     * Import Account
+     * @param requestBody
+     * @param authorization
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static importAccountV2AccountImportPost(requestBody: ImportRequest, authorization?: (string | null)): CancelablePromise<any>;
     /**
      * Context-aware code advisor
      * Analyze codebase context against Nia's indexed documentation to get tailored recommendations.
@@ -373,13 +390,55 @@ export declare class V2ApiService {
      */
     static uploadAndSubscribeV2DependenciesUploadPost(formData: Body_upload_and_subscribe_v2_dependencies_upload_post): CancelablePromise<routes__v2__dependencies__SubscribeResponse>;
     /**
-     * Query document(s) with an AI agent
+     * Query document(s) with an AI agent (synchronous)
      * Run the full document agent against one or more indexed PDFs or documents. The agent uses tools (search, read sections, read pages) to research the document(s) and produce a comprehensive answer with citations. Supports optional structured output via json_schema.
+     *
+     * **This endpoint is synchronous and holds the HTTP connection for the entire agent run (typically 1-10 minutes).** For production workloads or anything that may run longer, use POST /document/agent/jobs instead — it returns a job_id immediately and lets you poll or stream results without an HTTP connection limit.
      * @param requestBody
      * @returns DocumentQueryResponse Successful Response
      * @throws ApiError
      */
     static documentQueryV2DocumentAgentPost(requestBody: DocumentQueryRequest): CancelablePromise<DocumentQueryResponse>;
+    /**
+     * Enqueue an async document agent job
+     * Create a long-running document agent job. Returns immediately with a `job_id` — use GET /document/agent/jobs/{job_id} to poll for the result or GET /document/agent/jobs/{job_id}/stream for live SSE updates.
+     *
+     * Recommended for production workloads, batch evaluation pipelines, or anything that may run longer than ~10 minutes. The job runs on a background worker pool with 30-minute hard timeout, per-user concurrency caps, and automatic refunds on failure.
+     * @param requestBody
+     * @returns DocumentAgentJobResponse Successful Response
+     * @throws ApiError
+     */
+    static createDocumentAgentJobV2DocumentAgentJobsPost(requestBody: DocumentQueryRequest): CancelablePromise<DocumentAgentJobResponse>;
+    /**
+     * List async document agent jobs for the authenticated user
+     * @param status Filter by status: queued, running, completed, failed, cancelled
+     * @param limit
+     * @param skip
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listDocumentAgentJobsV2DocumentAgentJobsGet(status?: (string | null), limit?: number, skip?: number): CancelablePromise<any>;
+    /**
+     * Get the status / result of a document agent job
+     * @param jobId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getDocumentAgentJobV2DocumentAgentJobsJobIdGet(jobId: string): CancelablePromise<any>;
+    /**
+     * Cancel a running document agent job
+     * @param jobId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static cancelDocumentAgentJobV2DocumentAgentJobsJobIdDelete(jobId: string): CancelablePromise<any>;
+    /**
+     * Stream live updates from a document agent job (SSE)
+     * @param jobId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static streamDocumentAgentJobV2DocumentAgentJobsJobIdStreamGet(jobId: string): CancelablePromise<any>;
     /**
      * Start Extraction
      * @param requestBody
@@ -1164,6 +1223,144 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static getUsageSummaryV2V2UsageGet(): CancelablePromise<UsageSummaryResponse>;
+    /**
+     * Create Vault
+     * Create a new vault.
+     *
+     * Body: {display_name: str, description?: str, source_ids?: [str], schema_md?: str}
+     *
+     * Bootstraps the vault namespace with schema.md/index.md/log.md/META.md.
+     * Does NOT auto-trigger ingest — call POST /v2/vaults/{id}/run with
+     * mode=ingest after creation if you want immediate ingestion.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static createVaultV2VaultsPost(): CancelablePromise<Record<string, any>>;
+    /**
+     * List Vaults
+     * List vaults owned by the calling user / org.
+     * @param limit
+     * @param offset
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listVaultsV2VaultsGet(limit?: number, offset?: number): CancelablePromise<Record<string, any>>;
+    /**
+     * Get Vault
+     * Get vault metadata and current workflow status.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static getVaultV2VaultsVaultIdGet(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Delete Vault
+     * Delete a vault.
+     *
+     * Cleans up Postgres files AND TurboPuffer chunks. Order matters: drop
+     * TurboPuffer first, then PG, then Mongo. If any step fails before the Mongo
+     * delete, the vault row remains so the user can retry without losing
+     * accounting state.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static deleteVaultV2VaultsVaultIdDelete(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Patch Vault
+     * Update vault metadata (display_name, description, schema_md).
+     *
+     * When schema_md is updated, the new content is also written into the
+     * vault namespace as `/schema.md` so the bash session sees it immediately.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static patchVaultV2VaultsVaultIdPatch(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Cancel Vault Workflow
+     * Cancel an in-flight vault workflow run, if any.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static cancelVaultWorkflowV2VaultsVaultIdCancelPost(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Vault Graph
+     * Return the wikilink graph as nodes + edges for visualization.
+     *
+     * Walks all concept/entity/note pages, parses [[wikilinks]], and builds a
+     * force-directed-ready JSON structure. No LLM calls — pure file parsing.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static vaultGraphV2VaultsVaultIdGraphGet(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Load Vault
+     * Bootstrap dump for the `nia vault open` bash session.
+     *
+     * Mirrors the shape of /shell-docs/load. Returns vault metadata and either
+     * full file contents or just paths (for vaults > 1000 files).
+     *
+     * Up to 10000 files are returned (matches DIR_LISTING_LIMIT in fs_service.py).
+     * @param vaultId
+     * @param pathsOnly
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static loadVaultV2VaultsVaultIdLoadGet(vaultId: string, pathsOnly?: boolean): CancelablePromise<Record<string, any>>;
+    /**
+     * Run Vault Workflow
+     * Trigger a vault_workflow run. Body: {mode: ingest|sync|lint|refresh, source_ids?: [], model?: str, force?: bool}
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static runVaultWorkflowV2VaultsVaultIdRunPost(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Search Vault
+     * Hybrid search scoped to this vault's namespace.
+     *
+     * Returns embedded vault pages as ranked results with citations. The vault
+     * namespace was populated by the existing `fs_sync_workflow` mirroring every
+     * write into TurboPuffer (see routes/v2/fs.py:294-313).
+     *
+     * Telemetry: emits both `store_api_activity` (for the user-facing activity
+     * feed) and `store_retrieval_log` (for the training-data pipeline) so vault
+     * searches show up alongside every other retrieval call. Two retrieval logs
+     * are written for the two-tier strategy: a `vector` log for the TurboPuffer
+     * path, and a `regex` log if the PG grep fallback fires.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static searchVaultV2VaultsVaultIdSearchPost(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * List Vault Sources
+     * List the source IDs currently linked to this vault, with metadata.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listVaultSourcesV2VaultsVaultIdSourcesGet(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Add Vault Source
+     * Add a source to the vault's source_ids[]. Idempotent.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static addVaultSourceV2VaultsVaultIdSourcesPost(vaultId: string): CancelablePromise<Record<string, any>>;
+    /**
+     * Remove Vault Source
+     * Remove a source from the vault's source_ids[]. Idempotent.
+     * @param vaultId
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static removeVaultSourceV2VaultsVaultIdSourcesSourceIdDelete(vaultId: string, sourceId: string): CancelablePromise<Record<string, any>>;
     /**
      * List X Installations
      * @returns any Successful Response

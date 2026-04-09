@@ -26,6 +26,7 @@ import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeReques
 import type { DependencySubscribeRequest } from '../models/DependencySubscribeRequest';
 import type { DetectRequest } from '../models/DetectRequest';
 import type { DetectResponse } from '../models/DetectResponse';
+import type { DocumentAgentJobResponse } from '../models/DocumentAgentJobResponse';
 import type { DocumentQueryRequest } from '../models/DocumentQueryRequest';
 import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
@@ -42,6 +43,7 @@ import type { GoogleDriveInstallRequest } from '../models/GoogleDriveInstallRequ
 import type { GoogleDriveOAuthCallbackRequest } from '../models/GoogleDriveOAuthCallbackRequest';
 import type { GrepRequest } from '../models/GrepRequest';
 import type { GrepRequestBody } from '../models/GrepRequestBody';
+import type { ImportRequest } from '../models/ImportRequest';
 import type { IndexRequest } from '../models/IndexRequest';
 import type { LoginKeyRequest } from '../models/LoginKeyRequest';
 import type { LoginKeyResponse } from '../models/LoginKeyResponse';
@@ -100,6 +102,50 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class V2ApiService {
+    /**
+     * Export Account
+     * @param authorization
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static exportAccountV2AccountExportPost(
+        authorization?: (string | null),
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/account/export',
+            headers: {
+                'Authorization': authorization,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Import Account
+     * @param requestBody
+     * @param authorization
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static importAccountV2AccountImportPost(
+        requestBody: ImportRequest,
+        authorization?: (string | null),
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/account/import',
+            headers: {
+                'Authorization': authorization,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
     /**
      * Context-aware code advisor
      * Analyze codebase context against Nia's indexed documentation to get tailored recommendations.
@@ -779,8 +825,10 @@ export class V2ApiService {
         });
     }
     /**
-     * Query document(s) with an AI agent
+     * Query document(s) with an AI agent (synchronous)
      * Run the full document agent against one or more indexed PDFs or documents. The agent uses tools (search, read sections, read pages) to research the document(s) and produce a comprehensive answer with citations. Supports optional structured output via json_schema.
+     *
+     * **This endpoint is synchronous and holds the HTTP connection for the entire agent run (typically 1-10 minutes).** For production workloads or anything that may run longer, use POST /document/agent/jobs instead — it returns a job_id immediately and lets you poll or stream results without an HTTP connection limit.
      * @param requestBody
      * @returns DocumentQueryResponse Successful Response
      * @throws ApiError
@@ -793,6 +841,114 @@ export class V2ApiService {
             url: '/document/agent',
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Enqueue an async document agent job
+     * Create a long-running document agent job. Returns immediately with a `job_id` — use GET /document/agent/jobs/{job_id} to poll for the result or GET /document/agent/jobs/{job_id}/stream for live SSE updates.
+     *
+     * Recommended for production workloads, batch evaluation pipelines, or anything that may run longer than ~10 minutes. The job runs on a background worker pool with 30-minute hard timeout, per-user concurrency caps, and automatic refunds on failure.
+     * @param requestBody
+     * @returns DocumentAgentJobResponse Successful Response
+     * @throws ApiError
+     */
+    public static createDocumentAgentJobV2DocumentAgentJobsPost(
+        requestBody: DocumentQueryRequest,
+    ): CancelablePromise<DocumentAgentJobResponse> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/document/agent/jobs',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * List async document agent jobs for the authenticated user
+     * @param status Filter by status: queued, running, completed, failed, cancelled
+     * @param limit
+     * @param skip
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static listDocumentAgentJobsV2DocumentAgentJobsGet(
+        status?: (string | null),
+        limit: number = 20,
+        skip?: number,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/document/agent/jobs',
+            query: {
+                'status': status,
+                'limit': limit,
+                'skip': skip,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get the status / result of a document agent job
+     * @param jobId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static getDocumentAgentJobV2DocumentAgentJobsJobIdGet(
+        jobId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/document/agent/jobs/{job_id}',
+            path: {
+                'job_id': jobId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Cancel a running document agent job
+     * @param jobId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static cancelDocumentAgentJobV2DocumentAgentJobsJobIdDelete(
+        jobId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/document/agent/jobs/{job_id}',
+            path: {
+                'job_id': jobId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Stream live updates from a document agent job (SSE)
+     * @param jobId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static streamDocumentAgentJobV2DocumentAgentJobsJobIdStreamGet(
+        jobId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/document/agent/jobs/{job_id}/stream',
+            path: {
+                'job_id': jobId,
+            },
             errors: {
                 422: `Validation Error`,
             },
@@ -2986,6 +3142,313 @@ export class V2ApiService {
         return __request(OpenAPI, {
             method: 'GET',
             url: '/usage',
+        });
+    }
+    /**
+     * Create Vault
+     * Create a new vault.
+     *
+     * Body: {display_name: str, description?: str, source_ids?: [str], schema_md?: str}
+     *
+     * Bootstraps the vault namespace with schema.md/index.md/log.md/META.md.
+     * Does NOT auto-trigger ingest — call POST /v2/vaults/{id}/run with
+     * mode=ingest after creation if you want immediate ingestion.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static createVaultV2VaultsPost(): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/vaults',
+        });
+    }
+    /**
+     * List Vaults
+     * List vaults owned by the calling user / org.
+     * @param limit
+     * @param offset
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static listVaultsV2VaultsGet(
+        limit: number = 100,
+        offset?: number,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/vaults',
+            query: {
+                'limit': limit,
+                'offset': offset,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Get Vault
+     * Get vault metadata and current workflow status.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static getVaultV2VaultsVaultIdGet(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/vaults/{vault_id}',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Delete Vault
+     * Delete a vault.
+     *
+     * Cleans up Postgres files AND TurboPuffer chunks. Order matters: drop
+     * TurboPuffer first, then PG, then Mongo. If any step fails before the Mongo
+     * delete, the vault row remains so the user can retry without losing
+     * accounting state.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static deleteVaultV2VaultsVaultIdDelete(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/vaults/{vault_id}',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Patch Vault
+     * Update vault metadata (display_name, description, schema_md).
+     *
+     * When schema_md is updated, the new content is also written into the
+     * vault namespace as `/schema.md` so the bash session sees it immediately.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static patchVaultV2VaultsVaultIdPatch(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/vaults/{vault_id}',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Cancel Vault Workflow
+     * Cancel an in-flight vault workflow run, if any.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static cancelVaultWorkflowV2VaultsVaultIdCancelPost(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/vaults/{vault_id}/cancel',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Vault Graph
+     * Return the wikilink graph as nodes + edges for visualization.
+     *
+     * Walks all concept/entity/note pages, parses [[wikilinks]], and builds a
+     * force-directed-ready JSON structure. No LLM calls — pure file parsing.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static vaultGraphV2VaultsVaultIdGraphGet(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/vaults/{vault_id}/graph',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Load Vault
+     * Bootstrap dump for the `nia vault open` bash session.
+     *
+     * Mirrors the shape of /shell-docs/load. Returns vault metadata and either
+     * full file contents or just paths (for vaults > 1000 files).
+     *
+     * Up to 10000 files are returned (matches DIR_LISTING_LIMIT in fs_service.py).
+     * @param vaultId
+     * @param pathsOnly
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static loadVaultV2VaultsVaultIdLoadGet(
+        vaultId: string,
+        pathsOnly: boolean = false,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/vaults/{vault_id}/load',
+            path: {
+                'vault_id': vaultId,
+            },
+            query: {
+                'paths_only': pathsOnly,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Run Vault Workflow
+     * Trigger a vault_workflow run. Body: {mode: ingest|sync|lint|refresh, source_ids?: [], model?: str, force?: bool}
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static runVaultWorkflowV2VaultsVaultIdRunPost(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/vaults/{vault_id}/run',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Search Vault
+     * Hybrid search scoped to this vault's namespace.
+     *
+     * Returns embedded vault pages as ranked results with citations. The vault
+     * namespace was populated by the existing `fs_sync_workflow` mirroring every
+     * write into TurboPuffer (see routes/v2/fs.py:294-313).
+     *
+     * Telemetry: emits both `store_api_activity` (for the user-facing activity
+     * feed) and `store_retrieval_log` (for the training-data pipeline) so vault
+     * searches show up alongside every other retrieval call. Two retrieval logs
+     * are written for the two-tier strategy: a `vector` log for the TurboPuffer
+     * path, and a `regex` log if the PG grep fallback fires.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static searchVaultV2VaultsVaultIdSearchPost(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/vaults/{vault_id}/search',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * List Vault Sources
+     * List the source IDs currently linked to this vault, with metadata.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static listVaultSourcesV2VaultsVaultIdSourcesGet(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/vaults/{vault_id}/sources',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Add Vault Source
+     * Add a source to the vault's source_ids[]. Idempotent.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static addVaultSourceV2VaultsVaultIdSourcesPost(
+        vaultId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/vaults/{vault_id}/sources',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Remove Vault Source
+     * Remove a source from the vault's source_ids[]. Idempotent.
+     * @param vaultId
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static removeVaultSourceV2VaultsVaultIdSourcesSourceIdDelete(
+        vaultId: string,
+        sourceId: string,
+    ): CancelablePromise<Record<string, any>> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/vaults/{vault_id}/sources/{source_id}',
+            path: {
+                'vault_id': vaultId,
+                'source_id': sourceId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
         });
     }
     /**
