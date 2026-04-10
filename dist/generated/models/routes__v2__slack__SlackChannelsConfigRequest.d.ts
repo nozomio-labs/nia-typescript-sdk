@@ -14,4 +14,8 @@ export type routes__v2__slack__SlackChannelsConfigRequest = {
      * Channel IDs to exclude
      */
     exclude_channels?: (Array<string> | null);
+    /**
+     * Channel IDs to enable real-time sync (bot joins these channels)
+     */
+    live_sync_channels?: (Array<string> | null);
 };

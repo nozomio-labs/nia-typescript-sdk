@@ -55,6 +55,17 @@ export declare class VaultsService {
      */
     static patchVaultV2VaultsVaultIdPatch(vaultId: string): CancelablePromise<Record<string, any>>;
     /**
+     * Vault Agent
+     * Stream an AI agent response that can search/read the vault.
+     *
+     * Returns an SSE stream of events (same shape as the document agent).
+     * Charges one QUERY credit per call; refunds on failure.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static vaultAgentV2VaultsVaultIdAgentPost(vaultId: string): CancelablePromise<any>;
+    /**
      * Cancel Vault Workflow
      * Cancel an in-flight vault workflow run, if any.
      * @param vaultId

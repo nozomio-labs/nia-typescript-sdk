@@ -120,6 +120,30 @@ export class VaultsService {
         });
     }
     /**
+     * Vault Agent
+     * Stream an AI agent response that can search/read the vault.
+     *
+     * Returns an SSE stream of events (same shape as the document agent).
+     * Charges one QUERY credit per call; refunds on failure.
+     * @param vaultId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static vaultAgentV2VaultsVaultIdAgentPost(
+        vaultId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/vaults/{vault_id}/agent',
+            path: {
+                'vault_id': vaultId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Cancel Vault Workflow
      * Cancel an in-flight vault workflow run, if any.
      * @param vaultId
