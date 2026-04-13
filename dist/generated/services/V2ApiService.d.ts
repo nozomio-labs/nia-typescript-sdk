@@ -1246,6 +1246,19 @@ export declare class V2ApiService {
      */
     static listVaultsV2VaultsGet(limit?: number, offset?: number): CancelablePromise<Record<string, any>>;
     /**
+     * List Available Sources
+     * Return every source the user can add to a vault.
+     *
+     * Merges data_sources (excluding vaults), local_folders, and projects into a
+     * single list with a unified shape so the frontend picker shows everything.
+     * @param q Search filter on display_name / url
+     * @param limit
+     * @param offset
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static listAvailableSourcesV2VaultsAvailableSourcesGet(q?: (string | null), limit?: number, offset?: number): CancelablePromise<Record<string, any>>;
+    /**
      * Get Vault
      * Get vault metadata and current workflow status.
      * @param vaultId
