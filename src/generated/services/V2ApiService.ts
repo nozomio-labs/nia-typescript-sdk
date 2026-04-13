@@ -20,6 +20,7 @@ import type { ContextSemanticSearchResponse } from '../models/ContextSemanticSea
 import type { ContextShareRequest } from '../models/ContextShareRequest';
 import type { ContextShareResponse } from '../models/ContextShareResponse';
 import type { ContextShareUpdateRequest } from '../models/ContextShareUpdateRequest';
+import type { CreateFilesystemBody } from '../models/CreateFilesystemBody';
 import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestWithMode';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
@@ -32,6 +33,7 @@ import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
 import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
 import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
+import type { ExecBody } from '../models/ExecBody';
 import type { ExtractRequest } from '../models/ExtractRequest';
 import type { ExtractResponse } from '../models/ExtractResponse';
 import type { GitHubGlobRequest } from '../models/GitHubGlobRequest';
@@ -1205,6 +1207,63 @@ export class V2ApiService {
         });
     }
     /**
+     * Fs List
+     * List all filesystem namespaces owned by the caller.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsListV2FsGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/fs',
+        });
+    }
+    /**
+     * Fs Create
+     * Create a bare filesystem namespace. Returns a source_id you can
+     * immediately write to via /v2/fs/{source_id}/files.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsCreateV2FsPost(
+        requestBody: CreateFilesystemBody,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/fs',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Fs Exec
+     * @param sourceId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsExecV2FsSourceIdExecPost(
+        sourceId: string,
+        requestBody: ExecBody,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/fs/{source_id}/exec',
+            path: {
+                'source_id': sourceId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Fs Write
      * @param sourceId
      * @param requestBody
@@ -1372,6 +1431,27 @@ export class V2ApiService {
         });
     }
     /**
+     * Fs Get Metadata
+     * Get filesystem metadata + stats.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsGetMetadataV2FsSourceIdMetadataGet(
+        sourceId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/fs/{source_id}/metadata',
+            path: {
+                'source_id': sourceId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Fs Mkdir
      * @param sourceId
      * @param requestBody
@@ -1414,6 +1494,28 @@ export class V2ApiService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Fs Delete Namespace
+     * Delete a filesystem namespace and all its files. Only works for
+     * source_type=filesystem namespaces.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsDeleteNamespaceV2FsSourceIdNamespaceDelete(
+        sourceId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/fs/{source_id}/namespace',
+            path: {
+                'source_id': sourceId,
+            },
             errors: {
                 422: `Validation Error`,
             },

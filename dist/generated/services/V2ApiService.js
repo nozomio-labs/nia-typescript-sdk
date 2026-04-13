@@ -986,6 +986,58 @@ export class V2ApiService {
         });
     }
     /**
+     * Fs List
+     * List all filesystem namespaces owned by the caller.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsListV2FsGet() {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/fs',
+        });
+    }
+    /**
+     * Fs Create
+     * Create a bare filesystem namespace. Returns a source_id you can
+     * immediately write to via /v2/fs/{source_id}/files.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsCreateV2FsPost(requestBody) {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/fs',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Fs Exec
+     * @param sourceId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsExecV2FsSourceIdExecPost(sourceId, requestBody) {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/fs/{source_id}/exec',
+            path: {
+                'source_id': sourceId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Fs Write
      * @param sourceId
      * @param requestBody
@@ -1133,6 +1185,25 @@ export class V2ApiService {
         });
     }
     /**
+     * Fs Get Metadata
+     * Get filesystem metadata + stats.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsGetMetadataV2FsSourceIdMetadataGet(sourceId) {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/fs/{source_id}/metadata',
+            path: {
+                'source_id': sourceId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Fs Mkdir
      * @param sourceId
      * @param requestBody
@@ -1169,6 +1240,26 @@ export class V2ApiService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Fs Delete Namespace
+     * Delete a filesystem namespace and all its files. Only works for
+     * source_type=filesystem namespaces.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsDeleteNamespaceV2FsSourceIdNamespaceDelete(sourceId) {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/fs/{source_id}/namespace',
+            path: {
+                'source_id': sourceId,
+            },
             errors: {
                 422: `Validation Error`,
             },

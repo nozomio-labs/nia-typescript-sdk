@@ -1,3 +1,5 @@
+import type { CreateFilesystemBody } from '../models/CreateFilesystemBody';
+import type { ExecBody } from '../models/ExecBody';
 import type { GrepRequestBody } from '../models/GrepRequestBody';
 import type { MkdirBody } from '../models/MkdirBody';
 import type { MoveBody } from '../models/MoveBody';
@@ -5,6 +7,30 @@ import type { WriteBatchBody } from '../models/WriteBatchBody';
 import type { WriteFileBody } from '../models/WriteFileBody';
 import type { CancelablePromise } from '../core/CancelablePromise';
 export declare class FilesystemService {
+    /**
+     * Fs List
+     * List all filesystem namespaces owned by the caller.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsListV2FsGet(): CancelablePromise<any>;
+    /**
+     * Fs Create
+     * Create a bare filesystem namespace. Returns a source_id you can
+     * immediately write to via /v2/fs/{source_id}/files.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsCreateV2FsPost(requestBody: CreateFilesystemBody): CancelablePromise<any>;
+    /**
+     * Fs Exec
+     * @param sourceId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsExecV2FsSourceIdExecPost(sourceId: string, requestBody: ExecBody): CancelablePromise<any>;
     /**
      * Fs Write
      * @param sourceId
@@ -61,6 +87,14 @@ export declare class FilesystemService {
      */
     static fsLsV2FsSourceIdLsGet(sourceId: string, path?: string): CancelablePromise<any>;
     /**
+     * Fs Get Metadata
+     * Get filesystem metadata + stats.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsGetMetadataV2FsSourceIdMetadataGet(sourceId: string): CancelablePromise<any>;
+    /**
      * Fs Mkdir
      * @param sourceId
      * @param requestBody
@@ -76,6 +110,15 @@ export declare class FilesystemService {
      * @throws ApiError
      */
     static fsMvV2FsSourceIdMvPost(sourceId: string, requestBody: MoveBody): CancelablePromise<any>;
+    /**
+     * Fs Delete Namespace
+     * Delete a filesystem namespace and all its files. Only works for
+     * source_type=filesystem namespaces.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsDeleteNamespaceV2FsSourceIdNamespaceDelete(sourceId: string): CancelablePromise<any>;
     /**
      * Fs Read
      * @param sourceId

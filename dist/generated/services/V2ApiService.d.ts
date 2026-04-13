@@ -16,6 +16,7 @@ import type { ContextSemanticSearchResponse } from '../models/ContextSemanticSea
 import type { ContextShareRequest } from '../models/ContextShareRequest';
 import type { ContextShareResponse } from '../models/ContextShareResponse';
 import type { ContextShareUpdateRequest } from '../models/ContextShareUpdateRequest';
+import type { CreateFilesystemBody } from '../models/CreateFilesystemBody';
 import type { DeepResearchRequestWithMode } from '../models/DeepResearchRequestWithMode';
 import type { DeleteResponse } from '../models/DeleteResponse';
 import type { DependencyAnalyzeRequest } from '../models/DependencyAnalyzeRequest';
@@ -28,6 +29,7 @@ import type { DocumentQueryResponse } from '../models/DocumentQueryResponse';
 import type { EngineeringExtractRequest } from '../models/EngineeringExtractRequest';
 import type { EngineeringExtractResponse } from '../models/EngineeringExtractResponse';
 import type { EngineeringQueryRequest } from '../models/EngineeringQueryRequest';
+import type { ExecBody } from '../models/ExecBody';
 import type { ExtractRequest } from '../models/ExtractRequest';
 import type { ExtractResponse } from '../models/ExtractResponse';
 import type { GitHubGlobRequest } from '../models/GitHubGlobRequest';
@@ -531,6 +533,30 @@ export declare class V2ApiService {
      */
     static submitSourceFeedbackV2FeedbackSourcePost(requestBody: SourceFeedbackRequest): CancelablePromise<any>;
     /**
+     * Fs List
+     * List all filesystem namespaces owned by the caller.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsListV2FsGet(): CancelablePromise<any>;
+    /**
+     * Fs Create
+     * Create a bare filesystem namespace. Returns a source_id you can
+     * immediately write to via /v2/fs/{source_id}/files.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsCreateV2FsPost(requestBody: CreateFilesystemBody): CancelablePromise<any>;
+    /**
+     * Fs Exec
+     * @param sourceId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsExecV2FsSourceIdExecPost(sourceId: string, requestBody: ExecBody): CancelablePromise<any>;
+    /**
      * Fs Write
      * @param sourceId
      * @param requestBody
@@ -586,6 +612,14 @@ export declare class V2ApiService {
      */
     static fsLsV2FsSourceIdLsGet(sourceId: string, path?: string): CancelablePromise<any>;
     /**
+     * Fs Get Metadata
+     * Get filesystem metadata + stats.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsGetMetadataV2FsSourceIdMetadataGet(sourceId: string): CancelablePromise<any>;
+    /**
      * Fs Mkdir
      * @param sourceId
      * @param requestBody
@@ -601,6 +635,15 @@ export declare class V2ApiService {
      * @throws ApiError
      */
     static fsMvV2FsSourceIdMvPost(sourceId: string, requestBody: MoveBody): CancelablePromise<any>;
+    /**
+     * Fs Delete Namespace
+     * Delete a filesystem namespace and all its files. Only works for
+     * source_type=filesystem namespaces.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    static fsDeleteNamespaceV2FsSourceIdNamespaceDelete(sourceId: string): CancelablePromise<any>;
     /**
      * Fs Read
      * @param sourceId

@@ -2,6 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { CreateFilesystemBody } from '../models/CreateFilesystemBody';
+import type { ExecBody } from '../models/ExecBody';
 import type { GrepRequestBody } from '../models/GrepRequestBody';
 import type { MkdirBody } from '../models/MkdirBody';
 import type { MoveBody } from '../models/MoveBody';
@@ -11,6 +13,63 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
 export class FilesystemService {
+    /**
+     * Fs List
+     * List all filesystem namespaces owned by the caller.
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsListV2FsGet(): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/fs',
+        });
+    }
+    /**
+     * Fs Create
+     * Create a bare filesystem namespace. Returns a source_id you can
+     * immediately write to via /v2/fs/{source_id}/files.
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsCreateV2FsPost(
+        requestBody: CreateFilesystemBody,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/fs',
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Fs Exec
+     * @param sourceId
+     * @param requestBody
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsExecV2FsSourceIdExecPost(
+        sourceId: string,
+        requestBody: ExecBody,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'POST',
+            url: '/fs/{source_id}/exec',
+            path: {
+                'source_id': sourceId,
+            },
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
     /**
      * Fs Write
      * @param sourceId
@@ -179,6 +238,27 @@ export class FilesystemService {
         });
     }
     /**
+     * Fs Get Metadata
+     * Get filesystem metadata + stats.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsGetMetadataV2FsSourceIdMetadataGet(
+        sourceId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/fs/{source_id}/metadata',
+            path: {
+                'source_id': sourceId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Fs Mkdir
      * @param sourceId
      * @param requestBody
@@ -221,6 +301,28 @@ export class FilesystemService {
             },
             body: requestBody,
             mediaType: 'application/json',
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
+     * Fs Delete Namespace
+     * Delete a filesystem namespace and all its files. Only works for
+     * source_type=filesystem namespaces.
+     * @param sourceId
+     * @returns any Successful Response
+     * @throws ApiError
+     */
+    public static fsDeleteNamespaceV2FsSourceIdNamespaceDelete(
+        sourceId: string,
+    ): CancelablePromise<any> {
+        return __request(OpenAPI, {
+            method: 'DELETE',
+            url: '/fs/{source_id}/namespace',
+            path: {
+                'source_id': sourceId,
+            },
             errors: {
                 422: `Validation Error`,
             },

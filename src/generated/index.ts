@@ -30,6 +30,7 @@ export type { ContextSemanticSearchSuggestions } from './models/ContextSemanticS
 export type { ContextShareRequest } from './models/ContextShareRequest';
 export type { ContextShareResponse } from './models/ContextShareResponse';
 export type { ContextShareUpdateRequest } from './models/ContextShareUpdateRequest';
+export type { CreateFilesystemBody } from './models/CreateFilesystemBody';
 export type { DailyUsage1MResponse } from './models/DailyUsage1MResponse';
 export type { DatabaseFileItem } from './models/DatabaseFileItem';
 export type { DeepResearchRequestWithMode } from './models/DeepResearchRequestWithMode';
@@ -47,6 +48,7 @@ export type { EditedFile_Output } from './models/EditedFile_Output';
 export type { EngineeringExtractRequest } from './models/EngineeringExtractRequest';
 export type { EngineeringExtractResponse } from './models/EngineeringExtractResponse';
 export type { EngineeringQueryRequest } from './models/EngineeringQueryRequest';
+export type { ExecBody } from './models/ExecBody';
 export type { ExtractRequest } from './models/ExtractRequest';
 export type { ExtractResponse } from './models/ExtractResponse';
 export type { FileItem } from './models/FileItem';
